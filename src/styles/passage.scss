@@ -221,10 +221,3 @@ div.choices label._peek a::before {
     }
 }
 
-// Art panel
-
-#art {
-    display: block; 
-    background-color: black;
-    mask-image: var(--img-v-matte);
-}

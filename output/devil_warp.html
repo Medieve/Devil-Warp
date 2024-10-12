@@ -142,13 +142,14 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
   --dem-main-light: hsl(0, 100%, 80%);
   --math-bounce: cubic-bezier(.3,-1,.6,2);
   --math-overshoot: cubic-bezier(.4,0,.3,1.5);
-  --img-anguish: url(../assets/ico_anguish.svg);
-  --img-suspicion: url(../assets/ico_suspicion.svg);
-  --img-physicality: url(../assets/ico_physicality.svg);
-  --img-cognition: url(../assets/ico_cognition.svg);
-  --img-magnetism: url(../assets/ico_magnetism.svg);
-  --img-waves: url(../assets/layered-waves-haikei.svg);
-  --img-v-matte: url(../assets/vertical_matte.jpg);
+  --img-anguish: url(https://medieve.github.io/Devil-Warp/assets/ico_anguish.svg);
+  --img-suspicion: url(https://medieve.github.io/Devil-Warp/assets/ico_suspicion.svg);
+  --img-physicality: url(https://medieve.github.io/Devil-Warp/assets/ico_physicality.svg);
+  --img-cognition: url(https://medieve.github.io/Devil-Warp/assets/ico_cognition.svg);
+  --img-magnetism: url(https://medieve.github.io/Devil-Warp/assets/ico_magnetism.svg);
+  --img-waves: url(https://medieve.github.io/Devil-Warp/assets/layered-waves-haikei.svg);
+  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.jpg);
+  --img-devil: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
   font-family: "Offside", sans-serif;
   color: var(--ui-light);
 }
@@ -245,10 +246,20 @@ div#master {
   display: -ms-flexbox;
   display: flex;
   gap: 2em;
-  height: 95vh;
+  min-height: 100vh;
 }
 div#master #menu {
   z-index: 99;
+}
+
+#art {
+  display: block;
+  background-color: black;
+  background-attachment: fixed;
+  -webkit-mask-image: var(--img-v-matte);
+          mask-image: var(--img-v-matte);
+  width: 30%;
+  z-index: -1;
 }
 
 :is(#StoryInit, #notifications, #foreground) {
@@ -264,8 +275,8 @@ div#master #menu {
   -ms-grid-row: 2;
   grid-row: 2;
   width: calc(140ch + var(--__padding) * 2);
-  top: 15vh;
-  left: 6vw;
+  margin-top: 15vh;
+  margin-left: 6vw;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
@@ -1117,13 +1128,6 @@ div.choices label._peek a::before {
 }
 div.choices label._peek a::before + * {
   margin-left: 1em;
-}
-
-#art {
-  display: block;
-  background-color: black;
-  -webkit-mask-image: var(--img-v-matte);
-          mask-image: var(--img-v-matte);
 }
 /* twine-user-stylesheet #5: "sidebar.css" */
 #devil-sidebar {
@@ -4194,6 +4198,7 @@ function initializeTooltipObserver() {
 
 &lt;p&gt;The scavengers will find the shreds of your Demonic Might that you have already stripped, but you are unconcerned. You are nothing but a self-starter, you have established a dominion in Hell; You will again on the other side. The fact that your demonic vastness prevents you from entering the Tear is show enough for your abilities. Yet you should be aware, while success is all but guaranteed for you, the road may be difficult. You must show unholy wisdom in what you will leave behind.&lt;/p&gt;
 
+&lt;&lt;replace &quot;#art&quot;&gt;&gt;&lt;img src=&quot;https://medieve.github.io/Devil-Warp/assets/devil.jpg&quot; alt=&quot;Devil&quot; /&gt;&lt;&lt;/replace&gt;&gt;
 &lt;div class=&quot;margin choices&quot;&gt;
 &lt;label&gt;
         &lt;&lt;link &quot;&lt;&lt;radiobutton &#39;$lostItem&#39; &#39;orb&#39; checked&gt;&gt;Your brass Orb&quot;&gt;&gt;

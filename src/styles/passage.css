@@ -271,10 +271,3 @@ div.choices label._peek a::before {
 div.choices label._peek a::before + * {
   margin-left: 1em;
 }
-
-#art {
-  display: block;
-  background-color: black;
-  -webkit-mask-image: var(--img-v-matte);
-          mask-image: var(--img-v-matte);
-}

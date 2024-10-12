@@ -41,13 +41,14 @@
   --dem-main-light: hsl(0, 100%, 80%);
   --math-bounce: cubic-bezier(.3,-1,.6,2);
   --math-overshoot: cubic-bezier(.4,0,.3,1.5);
-  --img-anguish: url(../assets/ico_anguish.svg);
-  --img-suspicion: url(../assets/ico_suspicion.svg);
-  --img-physicality: url(../assets/ico_physicality.svg);
-  --img-cognition: url(../assets/ico_cognition.svg);
-  --img-magnetism: url(../assets/ico_magnetism.svg);
-  --img-waves: url(../assets/layered-waves-haikei.svg);
-  --img-v-matte: url(../assets/vertical_matte.jpg);
+  --img-anguish: url(https://medieve.github.io/Devil-Warp/assets/ico_anguish.svg);
+  --img-suspicion: url(https://medieve.github.io/Devil-Warp/assets/ico_suspicion.svg);
+  --img-physicality: url(https://medieve.github.io/Devil-Warp/assets/ico_physicality.svg);
+  --img-cognition: url(https://medieve.github.io/Devil-Warp/assets/ico_cognition.svg);
+  --img-magnetism: url(https://medieve.github.io/Devil-Warp/assets/ico_magnetism.svg);
+  --img-waves: url(https://medieve.github.io/Devil-Warp/assets/layered-waves-haikei.svg);
+  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.jpg);
+  --img-devil: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
   font-family: "Offside", sans-serif;
   color: var(--ui-light);
 }
@@ -144,10 +145,20 @@ div#master {
   display: -ms-flexbox;
   display: flex;
   gap: 2em;
-  height: 95vh;
+  min-height: 100vh;
 }
 div#master #menu {
   z-index: 99;
+}
+
+#art {
+  display: block;
+  background-color: black;
+  background-attachment: fixed;
+  -webkit-mask-image: var(--img-v-matte);
+          mask-image: var(--img-v-matte);
+  width: 30%;
+  z-index: -1;
 }
 
 :is(#StoryInit, #notifications, #foreground) {
@@ -163,8 +174,8 @@ div#master #menu {
   -ms-grid-row: 2;
   grid-row: 2;
   width: calc(140ch + var(--__padding) * 2);
-  top: 15vh;
-  left: 6vw;
+  margin-top: 15vh;
+  margin-left: 6vw;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
