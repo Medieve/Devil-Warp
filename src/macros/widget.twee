@@ -1,0 +1,22 @@
+:: widget [widget]
+<<widget "modalChoice">>
+    <label class="choice">
+        <<link $args[0]>>
+        $args[2]
+            <<replace #modal-text>>
+                <<include $args[1]>>
+            <</replace>>
+        <</link>>
+    </label>
+<</widget>>
+
+<!-- 
+<<idea "Watch an imp claim a authority over the others." "start_imp_authority" "<<set _authority = 1>>">>
+
+<<idea "Ignore the petty conflicts of the lower caste." "start_imp_ignore" "">>
+
+            
+<div class="modal">
+    <p id="modal-text"></p>
+</div> 
+-->

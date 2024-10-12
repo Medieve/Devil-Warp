@@ -1,0 +1,119 @@
+.sequence {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#modal_container {
+  display: none;
+  -webkit-backdrop-filter: blur(0px);
+          backdrop-filter: blur(0px);
+}
+
+#modal_container, #modal_exit a {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#modal_exit {
+  position: fixed;
+  z-index: -1;
+}
+
+#modal_exit a {
+  display: block;
+}
+
+#modal_container.show {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  -ms-flex-line-pack: start;
+      align-content: start;
+  -webkit-backdrop-filter: blur(0px);
+          backdrop-filter: blur(0px);
+  -webkit-animation: blur-transition 300ms ease forwards;
+          animation: blur-transition 300ms ease forwards;
+}
+
+@-webkit-keyframes blur-transition {
+  0% {
+    -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+  }
+  100% {
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+  }
+}
+
+@keyframes blur-transition {
+  0% {
+    -webkit-backdrop-filter: blur(0px);
+            backdrop-filter: blur(0px);
+  }
+  100% {
+    -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(20px);
+  }
+}
+#modal_window {
+  display: block;
+  top: 15vh;
+  position: relative;
+  background: var(--background-hex);
+  background-size: cover;
+  background-blend-mode: lighten, lighten, multiply, lighten, lighten, lighten, normal;
+  background-repeat: no-repeat;
+  border: 10px solid var(--ui-light);
+  border-width: 0 10px;
+  border-radius: 1em;
+  width: 50vw;
+  height: auto;
+  padding: 2rem;
+  opacity: 0;
+  -webkit-animation: fade-in 300ms ease-in forwards;
+          animation: fade-in 300ms ease-in forwards;
+  -webkit-filter: drop-shadow(0px 0px 2em var(--ui-medium));
+          filter: drop-shadow(0px 0px 2em var(--ui-medium));
+  -webkit-box-shadow: inset 0 0 2em var(--ui-medium), inset 0 0 1em var(--ui-light);
+          box-shadow: inset 0 0 2em var(--ui-medium), inset 0 0 1em var(--ui-light);
+}
+#modal_window p {
+  margin: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+#modal_window::before {
+  position: absolute;
+  top: 0;
+  left: -3rem;
+  font-family: var(--font-icon);
+  font-size: 2rem;
+  content: "close";
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

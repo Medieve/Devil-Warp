@@ -1,0 +1,16 @@
+// <div class="tippy-root">
+//   <div class="tippy-box" data-placement="top">
+//     <div class="tippy-content">
+//       My content
+//     </div>
+//     <div class="arrow">
+//   </div>
+// </div>
+
+.tippy-box {
+    background-color: var(--ui-medium);
+}
+
+.tippy-arrow::before {
+    border-top-color: var(--ui-medium) !important;
+}

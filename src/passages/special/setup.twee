@@ -1,0 +1,206 @@
+:: StoryTitle
+Devil Warp
+:: StoryAuthor
+<div>Musclemage</div>
+:: StoryData
+{
+        "ifid": "8C9DACB5-ADBA-459B-81EF-71A7D96DAF43",
+        "format": "SugarCube",
+        "format-version": "2.31.0"
+}
+:: StorySettings
+jquery: on
+:: StoryInit
+<<set $stress = 0>>
+<<set $demonic_might = 0>>
+<<set $night_count = 0>>
+<<set $vessel =  {
+        name: 'Tuan', 
+        last_name: 'Cruz',
+        Suspicion: 0,
+        Anguish: 0,
+        Magnetism: 0,
+        Physicality: 0,
+        Cognition: 0,
+}>>
+<<set $consequences = new consequences()>>
+<<set $story = {
+        forward: {
+                a: "false",
+                b: "false",
+                c: "false",
+                d: "false"
+        }
+}>>
+<<set $cards = []>>
+<<include 'card_setup'>>
+<<set $old_hand = []>>
+<<set $future_hand = []>>
+<<set $current_hand = $cards.randomMany(4)>>
+<<set $effects = {
+	hand_adjustment: 0
+}>>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+:: PassageHeader 
+<<silently>><<checkConsequences>><</silently>>
+
+
+:: StoryInterface
+<div id="master">
+	<div id="background" data-init-passage="background"></div>
+	<div id="menu" data-passage="StoryMenu"></div>
+	<div id="StoryInit" data-passage="StoryInit"></div>
+	<div id="notifications" data-passage="notifications"></div>
+
+	<div id="passages"></div>
+	<div id="" data-passage=""></div>
+
+	<div id="art"></div>
+
+	<div id="foreground" data-init-passage="foreground"></div>
+
+	<div id="load-save" data-passage="SaveLoad"></div>
+	
+</div>
+:: background 
+<div class="video-wrapper">
+<video aria-hidden="true" playsinline="" autoplay="" muted="" loop="" id="hero-video"> <source src="../assets/Fiberbackground.mp4" type="video/mp4"></video>
+</div>
+
+:: foreground
+<video aria-hidden="true" playsinline="" playbackRate="0.5" autoplay="" muted="" loop=""  id="ink-corner"> <source src="../assets/ink_corner.webm" type="video/webm"></video>
+
+<div id="foreground-wave">
+</div>
+:: SaveLoad
+<<link 'Restart'>><<run UI.restart()>><</link>>
+<<if previous() != "">>
+	<<back 'Back'>>
+<</if>>
+
+<span class="material-symbols-outlined menu_state">
+	<<link 'save_as'>><<run UI.saves()>><</link>>
+</span>
+:: StoryMenu
+<div id="devil-sidebar">
+	<div class="container">
+		<div id="Anguish">
+			<h2>Anguish</h2>
+			<label><<live $vessel.Anguish>></label>
+		</div>
+		<div id="Suspicion">
+			<h2>Suspicion</h2>
+			<label><<live $vessel.Suspicion>></label>
+		</div>
+	</div>
+	<div class="container">
+		<div id="Physicality">
+			<h2>Physicality</h2>
+			<label><<live $vessel.Physicality>></label>
+		</div>
+		<div id="Cognition">
+			<h2>Cognition</h2>
+			<label><<live $vessel.Cognition>></label>
+		</div>
+		<div id="Magnetism">
+			<h2>Magnetism</h2>
+			<label><<live $vessel.Magnetism>></label>
+		</div>
+	</div>
+	<<liveblock>>
+	<div id="consequences">
+		<<print $consequences.Physicality>>
+		<<print $consequences.Cognition>>
+		<<print $consequences.Magnetism>>
+	</div>
+	<</liveblock>>
+</div>
+
+/* Generate current hand */
+<<if $day === true>>
+	/* Generate future hand */
+	<<set $old_hand = $current_hand>>
+	<<set $current_hand = []>>
+    <<set $future_hand = $old_hand.concat($cards.randomMany($effects.hand_adjustment))>>
+	<<set $effects.hand_adjustment to 0>>
+
+    <<drop 'div' type 'card' id 'card_hand'>>
+		<<for _card range $future_hand>>
+			<<card _card>>
+			<<set $current_hand.push(_card)>>
+		<</for>>
+		<<onDrop>>
+			<<set $current_hand.push(_drag.data)>>
+		<<onRemove>>
+			<<set $current_hand.deleteWith(function (val) {
+				return val.id == _drag.data.id;
+			})>>
+    <</drop>>
+<</if>>
+
+:: PassageFooter
+<div id="modal_container" class="modal">
+	<label id="modal_exit">
+		<<link "">>
+			<<toggleclass #modal_container "show">>
+		<</link>>
+	</label>
+	<div id="modal_window">
+		<p id="modal-text"></p>
+	</div>
+</div>
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    height="0"
+    width="0"
+	shape-rendering="auto"
+>
+    <defs>
+        <filter id="squiggle">
+            <feTurbulence
+                type="fractalNoise"
+                id="turbulence"
+                baseFrequency=".05"
+                numOctaves="4"
+            >
+			</feTurbulence>
+            <feDisplacementMap
+                id="displacement"
+                in="SourceGraphic"
+                scale="8"
+            />
+
+			<feGaussianBlur stdDeviation="1"/>
+			<feComposite operator="in" in2="sourceGraphic"/>
+			
+        </filter>
+    </defs>
+</svg>
+
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    version="1.1"
+    height="0"
+    width="0"
+>
+    <defs>
+        <filter id="wiggle">
+            <feTurbulence
+                type="fractalNoise"
+                id="turbulence"
+                baseFrequency=".02"
+                numOctaves="4"
+            >
+              <animate attributeName="baseFrequency" dur="10s" values="0.09 0.09; 0.04 0.04; 0.09 0.09;" repeatCount="indefinite"></animate>
+            </feTurbulence>
+            <feDisplacementMap
+                id="displacement"
+                in="SourceGraphic"
+                scale="14"
+            />
+        </filter>
+    </defs>
+</svg>
+

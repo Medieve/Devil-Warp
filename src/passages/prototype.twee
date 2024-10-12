@@ -1,0 +1,66 @@
+:: test
+<<silently>><<set _choice = [
+    new choice({
+        value: 50,
+        requires: ["Anguish", "Cognition"]
+    }),
+    new choice({
+        value: 40,
+    }),
+    new choice({
+        value: 40,
+        speaker: 'demon'
+    })
+]>>
+<<set $day = true>>
+ <</silently>>
+ <<choice_menu>>
+<p>As $vessel.name awakens with a pounding headache, his eyes squint into the dimly lit wreckage of the room. </p>
+
+<p>Outlines of darkened glass displays and torn consoles shade his understanding of the terrible aftermath. With a groan, he lifts himself up from the ground, his left leg stiff and glistening in the emergency lights that gently pulse in the recesses of the floor. </p>
+
+<p>He hops towards a still standing console whose display is still lit and begins to piece together something of a priority list in his head.</p>
+<<nobr>>
+<<done>>
+<<run setup.card_setup()>>
+<</done>>
+
+<<card_link "Proceed" testResults>>
+    <<set $effects.hand_adjustment += 1>>
+    <<set $consequences to setup.getConsequences(_choice)>>
+<</card_link>>
+
+<span id="status"></span>
+<</nobr>>
+:: testResults
+<<if $consequences.choice_0>>
+    <<include 'test-consequence_0'>>
+    <<else>>
+        <<include 'test-consequence_0F'>>
+<</if>>
+<<if $consequences.choice_1>>
+    <<include 'test-consequence_1'>>
+    <<else>>
+        <<include 'test-consequence_1F'>>
+<</if>>
+
+:: test-choice_0
+The ship comes first, get status updates on damaged systems and see if the automated emergency systems are online.
+
+:: test-choice_1
+$vessel.name's health comes first, look for a medical kit to staunch the bleeding.
+
+:: test-choice_2
+So much delicious pain.
+
+:: test-consequence_0
+You get the status updates on the damaged systems. 
+
+:: test-consequence_0F
+You find the console is offline.
+
+:: test-consequence_1
+You find a medical kit and staunch the bleeding.
+
+:: test-consequence_1F
+You find a medical kit but it's empty.

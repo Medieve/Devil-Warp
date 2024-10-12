@@ -1,0 +1,36 @@
+To create a card choice, this will want choice text in "passage-choice_%" and "passage-consequences_%" for the following passage's text. 
+<<silently>>
+    <<set _choice = [
+    new choice({
+        value: 5,
+        requires: ["anguish", "cognition"]
+    }),
+    new choice({
+        value: 4,
+    }),
+    new choice({
+        value: 4,
+        speaker: 'demon' // Styles the choice, in this case makes it a demon choice.
+    })
+    ]>>
+    <<set $day = true>>
+ <</silently>>
+ <<choice_menu>> // This is the macro that creates the choice menu
+
+ <<done>>
+<<run setup.card_setup()>> // This is the macro that sets up the cards and the drop zones, drawing them from the deck
+<</done>>
+
+<<card_link "Proceed" testResults>> // Creates a button to move on, moving to the passage "testResults"
+    <<set $effects.hand_adjustment += 1>>
+    <<set $consequences to setup.getConsequences(_choice)>>
+<</card_link>>
+
+Creates a modal pop-up window
+<<define "term">>
+
+Creates a modal pop-up window
+<<link "Watch an imp claim a authority over the others.">>
+        <<replace #modal-text>><<include "start_imp_authority">><</replace>>
+        <<toggleclass #modal_container "show">>
+<</link>>

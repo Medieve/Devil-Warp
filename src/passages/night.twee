@@ -1,0 +1,9 @@
+:: night_start
+<<set $night_count ++>>
+<<if $night_count == 1>>
+<p>In the dream-scape of this mind, you manifest like a dark nova; Memories and figments are absorbed into you as you take a hold inside this vessel. Like a thick oil you seep into the crevices and gaps until you feel the pressure thicken, your presence filling the void.</p>
+
+<p>Gathering the memories that you have absorbed, you learn your vessel's name-- <<print $vessel.name + ' ' + $vessel.last_name>>; A Level II Engineer on the R.V. Nectu. </p>
+    <<else>>
+<</if>>
+

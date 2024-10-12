@@ -1,0 +1,373 @@
+#menu_choices {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  float: right;
+  margin-left: 2em;
+  width: 50%;
+  gap: 2em 1em;
+}
+
+#ui-bar.stowed ~ #story .card_hand {
+  left: calc(2em + 50%);
+}
+
+.drag_over {
+  background: red;
+}
+
+#card_hand {
+  position: fixed;
+  bottom: 3vh;
+  width: 90vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-perspective: 3000px;
+          perspective: 3000px;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+card {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2px auto 2px 1fr;
+  grid-template-columns: 1fr auto 1fr;
+  -ms-grid-rows: auto 2px auto 2px auto;
+      grid-template-areas: "name name name" "tags value rewards" "quote quote quote";
+  gap: 2px;
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--mc-main-dark)), to(transparent));
+  background: linear-gradient(0deg, var(--mc-main-dark), transparent);
+  -webkit-backdrop-filter: blur(4px);
+          backdrop-filter: blur(4px);
+  font-size: 1.2vh;
+  border: 0.2em solid var(--mc-main);
+  border-radius: 15px;
+  padding: 0.5rem;
+  height: 16vh;
+  width: 12vh;
+  -webkit-transition: all 500ms ease var(--math-bounce);
+  transition: all 500ms ease var(--math-bounce);
+  -webkit-transform-origin: bottom left;
+          transform-origin: bottom left;
+  -webkit-filter: drop-shadow(2px 4px 10px var(--mc-main-dark));
+          filter: drop-shadow(2px 4px 10px var(--mc-main-dark));
+}
+card.demon {
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--dem-main-dark)), to(transparent));
+  background: linear-gradient(0deg, var(--dem-main-dark), transparent);
+  border-color: var(--dem-main);
+  -webkit-filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+          filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+}
+card h2 {
+  -ms-grid-row: 3;
+  -ms-grid-column: 3;
+  display: -ms-grid;
+  display: grid;
+  grid-area: value;
+  place-content: center;
+  -ms-grid-row-align: center;
+      align-self: center;
+  width: 2em;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border: 2px solid var(--ui-accent);
+  border-radius: 50%;
+}
+card h3 {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 5;
+  grid-area: name;
+  margin: 0;
+  line-height: 1;
+  text-align: center;
+}
+card blockquote {
+  -ms-grid-row: 5;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 5;
+  grid-area: quote;
+  margin: 0;
+  font-size: 0.8em;
+  text-align: center;
+}
+card .tags {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: tags;
+}
+card .rewards {
+  -ms-grid-row: 3;
+  -ms-grid-column: 5;
+  grid-area: rewards;
+}
+card .tags, card .rewards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 3px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+card .tags icon, card .rewards icon {
+  height: 2em;
+  width: 2em;
+  border: none;
+  background: var(--ui-dark);
+}
+card:nth-of-type(1) {
+  --X: calc(10px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(1px));
+          transform: translateX(var(--X)) translateZ(calc(1px));
+}
+card:nth-of-type(2) {
+  --X: calc(20px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(2px));
+          transform: translateX(var(--X)) translateZ(calc(2px));
+}
+card:nth-of-type(3) {
+  --X: calc(30px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(3px));
+          transform: translateX(var(--X)) translateZ(calc(3px));
+}
+card:nth-of-type(4) {
+  --X: calc(40px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(4px));
+          transform: translateX(var(--X)) translateZ(calc(4px));
+}
+card:nth-of-type(5) {
+  --X: calc(50px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(5px));
+          transform: translateX(var(--X)) translateZ(calc(5px));
+}
+card:nth-of-type(6) {
+  --X: calc(60px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(6px));
+          transform: translateX(var(--X)) translateZ(calc(6px));
+}
+card:nth-of-type(7) {
+  --X: calc(70px);
+  -webkit-transform: translateX(var(--X)) translateZ(calc(7px));
+          transform: translateX(var(--X)) translateZ(calc(7px));
+}
+card:hover {
+  -webkit-animation: bring-out 240ms forwards var(--math-overshoot);
+          animation: bring-out 240ms forwards var(--math-overshoot);
+}
+@-webkit-keyframes bring-out {
+  0% {
+    -webkit-transform: translateX(calc(var(--X))) rotateZ(-4deg);
+            transform: translateX(calc(var(--X))) rotateZ(-4deg);
+  }
+  50% {
+    -webkit-transform: translateX(calc(var(--X) - 10px)) rotateZ(-8deg) translateZ(50px);
+            transform: translateX(calc(var(--X) - 10px)) rotateZ(-8deg) translateZ(50px);
+  }
+  100% {
+    -webkit-transform: translate3d(calc(var(--X)), 0, 300px);
+            transform: translate3d(calc(var(--X)), 0, 300px);
+  }
+}
+@keyframes bring-out {
+  0% {
+    -webkit-transform: translateX(calc(var(--X))) rotateZ(-4deg);
+            transform: translateX(calc(var(--X))) rotateZ(-4deg);
+  }
+  50% {
+    -webkit-transform: translateX(calc(var(--X) - 10px)) rotateZ(-8deg) translateZ(50px);
+            transform: translateX(calc(var(--X) - 10px)) rotateZ(-8deg) translateZ(50px);
+  }
+  100% {
+    -webkit-transform: translate3d(calc(var(--X)), 0, 300px);
+            transform: translate3d(calc(var(--X)), 0, 300px);
+  }
+}
+
+icon {
+  position: relative;
+  background: var(--col-black);
+  height: 2.5em;
+  aspect-ratio: 1;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  border: 2px solid white;
+  border-radius: 50%;
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+}
+icon::after {
+  background: var(--ui-light);
+  content: "";
+  position: absolute;
+  background-size: 100%;
+  inset: 0;
+}
+icon.Physicality::after {
+  content: "";
+  position: absolute;
+  -webkit-mask-box-image: var(--img-physicality);
+  background-size: 100%;
+  inset: 0;
+}
+icon.Cognition::after {
+  content: "";
+  position: absolute;
+  -webkit-mask-box-image: var(--img-cognition);
+  background-size: 100%;
+  inset: 0;
+}
+icon.Magnetism::after {
+  content: "";
+  position: absolute;
+  -webkit-mask-box-image: var(--img-magnetism);
+  background-size: 100%;
+  inset: 0;
+}
+icon.Anguish::after {
+  content: "";
+  position: absolute;
+  -webkit-mask-box-image: var(--img-anguish);
+  background-size: 100%;
+  inset: 0;
+}
+icon.on {
+  background: var(--ui-accent-dark);
+  border-color: var(--ui-accent);
+  -webkit-box-ordinal-group: 1;
+      -ms-flex-order: 0;
+          order: 0;
+}
+icon.on::before {
+  content: "";
+  position: absolute;
+  inset: -0.2em;
+  border-radius: 50%;
+  background: var(--ui-accent);
+  -webkit-filter: url(#wiggle);
+          filter: url(#wiggle);
+  z-index: -1;
+}
+
+#menu_choices [id^=choice] card {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  background: none;
+  height: 1rem;
+  width: 1rem;
+  padding: 1em;
+  border: none;
+  -webkit-animation: card-in 200ms ease-in-out;
+          animation: card-in 200ms ease-in-out;
+  -webkit-transform: unset;
+          transform: unset;
+  pointer-events: all;
+}
+#menu_choices [id^=choice] card h2 {
+  background: none;
+  border: none;
+}
+#menu_choices [id^=choice] card::before {
+  content: "";
+  position: absolute;
+  inset: 0.5em;
+  background: var(--col-black);
+  border: 2px solid var(--ui-medium);
+  border-radius: 0;
+  rotate: 45deg;
+  z-index: -1;
+  -webkit-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+#menu_choices [id^=choice] card:hover {
+  z-index: 99;
+}
+#menu_choices [id^=choice] card:hover h3 {
+  display: block;
+}
+#menu_choices [id^=choice] card:hover h3 {
+  font-size: 0.8em;
+}
+#menu_choices [id^=choice] card:hover h2 {
+  width: 2em;
+  -ms-grid-row-align: end;
+  -ms-grid-column-align: end;
+  place-self: end;
+}
+#menu_choices [id^=choice] card:hover::before {
+  inset: 0;
+  rotate: 0deg;
+  -webkit-transition: none;
+  transition: none;
+}
+#menu_choices [id^=choice] card:hover::after {
+  content: "";
+  position: absolute;
+  inset: -5em;
+  border-radius: 100%;
+  background: var(--ui-dark);
+  z-index: -1;
+}
+#menu_choices [id^=choice] card:not(:hover) h3, #menu_choices [id^=choice] card:not(:hover) p, #menu_choices [id^=choice] card:not(:hover) blockquote, #menu_choices [id^=choice] card:not(:hover) .rewards, #menu_choices [id^=choice] card:not(:hover) .tags {
+  display: none;
+}
+
+@-webkit-keyframes card-in {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes card-in {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+.drag_over.macro-drop {
+  background: radial-gradient(ellipse, var(--col-red), transparent) !important;
+}
+.drag_over.macro-drop p {
+  pointer-events: none;
+}
+
+.initial {
+  border-color: green;
+}

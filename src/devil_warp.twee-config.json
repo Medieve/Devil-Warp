@@ -1,0 +1,49 @@
+{
+    "sugarcube-2": {
+        "macros": {
+            "drop": {
+                "container": true
+            },
+            "drag": {
+                "container": true
+            },
+            "data": {
+                "container": false
+            },
+            "onDrop": {
+                "container": false
+            },
+            "onRemove": {
+                "container": false
+            },
+            "onAny": {
+                "container": false
+            },
+            "dragend": {
+                "container": false
+            },
+            "card": {
+                "container": false
+            },
+            "define": {
+                "container": false
+            },
+            "choice_menu": {
+                "container": false
+            },
+            "runConsequences": {
+                "container": false
+            },
+            "checkConsequences": {
+                "container": false
+            },
+            "flare": {
+                "container": false
+            },
+            "card_link": {
+                "container": true
+            }
+
+        }
+    }
+}

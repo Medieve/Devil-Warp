@@ -1,0 +1,91 @@
+:: Start
+<p id="test" style="display: block; text-align: center; text-indent: 0; font-size: 24px;"><span class="infernal jitter"><<link 'Pain' 'start_pain'>><</link>></span></p>
+
+<p><<link 'Test' 'test'>>
+<</link>></p>
+
+:: start_pain
+<p>Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a <<define "Deluder">>, it is not enough.</p>
+
+<p>You need to be free, and freedom has come in the form of a tear in your prison. The tear appeared to you like a quickly scabbing wound, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other to reach it. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be an easy thing to transform into a more fluid form if this was a common opening, but Hell is made of more complex dimensions than physical boundaries. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
+
+[[You take a moment -> start_take_a_moment]]
+
+:: start_take_a_moment
+
+<p>As you consider what parts of you to  consider your options and gaze out at your <span class="infernal">infernal domain</span>. The open-balconies cinquefoil chamber is surfaced with glistening, tight ridges of skin to create an irregular pattern underneath the sole. The arches that divides the chamber into its five lobes are ribbed, pulsing gently as they soar overhead into engorged heads that sporadically weep a thin lubricant. </p>
+
+<p>The scavengers will find the shreds of your Demonic Might that you have already stripped, but you are unconcerned. You are nothing but a self-starter, you have established a dominion in Hell; You will again on the other side. The fact that your demonic vastness prevents you from entering the Tear is show enough for your abilities. Yet you should be aware, while success is all but guaranteed for you, the road may be difficult. You must show unholy wisdom in what you will leave behind.</p>
+
+<div class="margin choices">
+<label>
+        <<link "<<radiobutton '$lostItem' 'orb' checked>>Your brass Orb">>
+                <<replace "#item_description">>An icon of your station and Authority, plundered from Saint Edmund after he was killed by Vikings. Saturated with an aura of your Demonic Might, it is a powerful tool for establishing dominion over lesser demons and aery spirits. Without this item, those same spirits will need to be convinced of your supremacy. <</replace>>
+        <</link>>
+</label>
+<label>
+        <<link "<<radiobutton '$lostItem' 'eye'>>A sapphire Eye">>
+                <<replace "#item_description">>Recovered from a 12th-century witch accused of casting her Evil Eye on the sons of a Toulouse Count. Still imbued with her supernatural power, this tool will give glimpses into the past and future of those you meet, though the information these visions afford tend to be less direct. Without this item you won't be privy to those subtle secrets and you will have to rely on your own wits and senses.<</replace>>
+        <</link>>
+</label>
+<label>
+        <<link "<<radiobutton '$lostItem' 'whip'>>A Black Whip">>
+                <<replace "#item_description">>From the tomb of Roman Consul Apronius, this whip is woven from the torn hairs of deserting soldiers. This glistening whip is thick with vigor taken from those it has punished. Amongst its practical and more "fun" uses, its power comes from the energy it now bestows to those you find yourself riding. Without this tool, those you possess will naturally lack the energy to accomplish all what your ambitions will demand.<</replace>>
+        <</link>>
+</label>
+</div>
+//<p id="item_description">What tool will you leave behind?</p>//
+
+[[Continue|start_make_demon1]]
+
+:: start_make_demon1
+<<switch $lostItem>>
+        <<case 'orb'>>
+                <<include 'scene_orb'>>
+        <<case 'eye'>>
+                <<include 'scene_eye'>>
+        <<case 'whip'>>
+                <<include 'scene_whip'>>
+<</switch>>
+
+<<linkappend 'The chaotic scene is left behind as you fly towards the tear in the dimensional veil of Hell.' t8n>><<include 'start_make_demon1_continue1'>><</linkappend>>
+
+:: start_make_demon1_continue1
+<p>Near the tear, reality splinters and refracts upon itself like a shattered mirror. Your visage is caught in the reflections and you pause in your diminished form. While a great number of Demonic Might has been left behind, you have been left with a semblance of self. </p>
+
+<p>While your psychic strength has been diminished, your physical form weighs with heavy bulk. Each muscle rises proud and sweeps into each other in aesthetic repetition. </p>
+
+[[Find a host -> start_the_host]]
+:: scene_orb
+<p>You leave your orb behind where shoving imps edge around in a fearful circle, you smirk at the thought of some far-future where if you ever return if any of them would have dared to claim the tool.</p>
+
+<div class="choices">
+        <label class="_peek">
+                <<link "Watch an imp claim a authority over the others.">>
+                        <<replace #modal-text>><<include "start_imp_authority">><</replace>>
+                        <<toggleclass #modal_container "show">>
+                <</link>>
+        </label>
+        <label class="_peek"> 
+                <<link "Ignore the petty conflicts of the lower caste.">>
+                        <<replace #modal-text>><<include "start_imp_ignore">><</replace>>
+                        <<toggleclass #modal_container "show">>
+                <</link>>
+        </label>
+</div>
+
+:: start_imp_authority
+An imp picks up the orb.
+
+:: scene_eye
+<p>You leave your Eye behind where a lowly imp slides in to claim it, against its siblings grasping claws it places the eye against his socket. With a flare of sickly green light the imp vanishes to elsewhere. </p>
+:: scene_whip
+<p>You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.</p>
+
+:: start_the_host
+<p>Your Aether swells out into his chord of destiny but in an unexpectedly limited fashion– few nodes of consequence flare weakly in your vision. Even with this thin thread of destiny your current amount of Aether stretches mere days into the future. Your manipulations will be less delicate but now even those will need to wait as a more pressing problem rises to your immediate awareness. The vessel’s mind has more than the expected number of occupants.</p> 
+
+<p>There is an artificial intelligence on the periphery of the human one. Not sophisticated enough to identify what you are, nonetheless it seems equipped enough to understand that there is a new presence– one which it has decided is hostile. </p>
+
+[[Fall to darkness -> night_start]]
+

@@ -1,0 +1,88 @@
+#devil-sidebar {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  min-width: 130px;
+  gap: 1rem;
+}
+#devil-sidebar > .container > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 1em;
+}
+#devil-sidebar h2 {
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 2;
+}
+#devil-sidebar .resources > label {
+  margin: 0 1em;
+}
+
+#load-save {
+  position: fixed;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: var(--ui-medium);
+  padding: 2em 2em 5em 2em;
+  left: 1vw;
+  top: 15vh;
+  width: 6em;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  line-height: 2;
+  -webkit-transform: rotate3d(-1, 1, 0, 19deg);
+          transform: rotate3d(-1, 1, 0, 19deg);
+  outline: 1px solid var(--ui-light);
+  outline-offset: -0.5em;
+  border: 2px solid var(--ui-light);
+  border-width: 0 2px;
+  border-radius: 0.5em;
+  background: var(--background-hex);
+  background-size: cover;
+  background-blend-mode: lighten, lighten, multiply, lighten, lighten, lighten, normal;
+  background-repeat: no-repeat;
+  -webkit-filter: drop-shadow(0px 0px 16px var(--ui-medium));
+          filter: drop-shadow(0px 0px 16px var(--ui-medium));
+  -webkit-box-shadow: inset 0 0 16px var(--ui-medium);
+          box-shadow: inset 0 0 16px var(--ui-medium);
+  z-index: 99;
+}
+#load-save a {
+  text-align: center;
+}
+#load-save > a:hover {
+  background: var(--ui-medium);
+  position: relative;
+  text-decoration: none;
+}
+#load-save > a:hover::before {
+  position: absolute;
+  left: -1ch;
+  content: ":";
+}
+#load-save .menu_state {
+  font-size: 2em;
+  text-align: center;
+  line-height: 1.5em;
+}
+#load-save .menu_state a:hover {
+  text-decoration: none;
+  -webkit-filter: drop-shadow(0px 0px 6px var(--ui-light));
+          filter: drop-shadow(0px 0px 6px var(--ui-light));
+}
+#load-save .menu_state a:hover::before {
+  content: "";
+}

@@ -1,0 +1,23 @@
+:: definition [widget]
+<<widget "define">><<nobr>>
+    <<link `_args[0]`>>
+        <<replace #modal-text>><<include `'define_' + _args[0]`>><</replace>>
+        <<toggleclass #modal_container "show">>
+    <</link>>
+<</nobr>><</widget>>
+
+:: flare [widget nobr]
+<<widget "flare">>
+    <<toggleclass _args[0] 'flare'>>
+    <<timed 400ms>>
+        <<toggleclass _args[0] 'flare'>>
+    <</timed>>
+<</widget>>
+
+:: card_link [widget nobr]
+<<widget "card_link" container>>
+    <<link _args[0] _args[1]>>
+        <<set $old_hand to clone($current_hand)>>
+        _contents
+    <</link>>
+<</widget>>

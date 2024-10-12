@@ -1,0 +1,280 @@
+.margin {
+  margin: 1em 0;
+}
+
+.flare {
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  -webkit-filter: drop-shadow(0 0 0.5rem #fff);
+          filter: drop-shadow(0 0 0.5rem #fff);
+}
+.flare::after {
+  content: "";
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  -webkit-animation: flare 300ms ease 1 forwards;
+          animation: flare 300ms ease 1 forwards;
+}
+
+span.infernal {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-demonic);
+  font-size: 1.25em;
+  color: var(--col-red);
+  line-height: 1;
+  text-indent: 0;
+}
+span.infernal a::before {
+  background: unset !important;
+}
+span.infernal::before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: hsla(0, 70%, 50%, 0.5);
+  -webkit-filter: url(#wiggle) blur(8px);
+          filter: url(#wiggle) blur(8px);
+  z-index: -1;
+}
+
+@-webkit-keyframes flare {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+
+@keyframes flare {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+}
+.macro-cycle p, .macro-cycle, .dream {
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--col-verdigris-trans)), color-stop(var(--col-verdigris)), to(var(--col-verdigris-trans)));
+  background: linear-gradient(0deg, var(--col-verdigris-trans), var(--col-verdigris), var(--col-verdigris-trans));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  font-weight: bold;
+  color: transparent;
+  -webkit-animation: shimmer 3s infinite linear;
+          animation: shimmer 3s infinite linear;
+  -webkit-transition: -webkit-filter 0.5s ease;
+  transition: -webkit-filter 0.5s ease;
+  transition: filter 0.5s ease;
+  transition: filter 0.5s ease, -webkit-filter 0.5s ease;
+  -webkit-filter: brightness(0);
+          filter: brightness(0);
+}
+.macro-cycle p:hover, .macro-cycle:hover, .dream:hover {
+  -webkit-animation-play-state: paused;
+          animation-play-state: paused;
+  -webkit-filter: brightness(4);
+          filter: brightness(4);
+}
+
+@-webkit-keyframes shimmer {
+  0% {
+    background-position: 100% -100%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 100% -100%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+#menu_choices [id^=choice] {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 0.5rem auto;
+      grid-template-areas: "description description description description description description" "current card1 card2 card3 value rewards";
+  -ms-grid-columns: auto 0 auto 0 auto 0 auto 0 auto 0 1fr;
+  grid-template-columns: auto auto auto auto auto 1fr;
+  gap: 0.5rem 0;
+  place-content: center;
+  border: 2px solid white;
+  padding: 1em 2em;
+}
+#menu_choices [id^=choice] .choice_text {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 11;
+  grid-area: description;
+  text-align: center;
+}
+#menu_choices [id^=choice] .requirements, #menu_choices [id^=choice] .rewards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  text-align: center;
+}
+#menu_choices [id^=choice] .rewards {
+  -ms-grid-row: 3;
+  -ms-grid-column: 11;
+  grid-area: rewards;
+}
+#menu_choices [id^=choice] h2 {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid var(--ui-medium);
+  border-radius: 50%;
+  background: var(--ui-dark);
+  text-align: center;
+  z-index: 1;
+}
+#menu_choices [id^=choice] h2.value {
+  -ms-grid-row: 3;
+  -ms-grid-column: 9;
+  grid-area: value;
+}
+#menu_choices [id^=choice] h2.current {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: current;
+  position: relative;
+  background: none;
+  border: none;
+}
+#menu_choices [id^=choice] h2.current::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--col-black);
+  border: 2px solid var(--ui-medium);
+  border-radius: 0;
+  rotate: 45deg;
+  z-index: -1;
+}
+#menu_choices [id^=choice] p {
+  margin: 0;
+}
+#menu_choices [id^=choice].success h2.current {
+  color: var(--ui-dark);
+}
+#menu_choices [id^=choice].success h2.current::before {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent-light);
+}
+
+#menu_choices [id^=choice_].vessel {
+  background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
+  border: 2px solid var(--mc-main);
+  color: var(--mc-main-light);
+  border-radius: 1em;
+}
+
+#menu_choices [id^=choice_].demon {
+  position: relative;
+  color: var(--dem-main-light);
+  border: unset;
+}
+#menu_choices [id^=choice_].demon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
+  border: 2px solid var(--dem-main);
+  border-radius: 1em;
+  z-index: 0;
+  -webkit-filter: url(#squiggle);
+          filter: url(#squiggle);
+}
+
+div.choices {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+div.choices label {
+  display: block;
+  position: relative;
+  padding: 5px;
+}
+div.choices label::before {
+  position: absolute;
+  content: "";
+  inset: 0;
+  background: var(--col-tuscany-trans);
+  border: 1px solid var(--col-tuscany);
+  -webkit-mask-image: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(5em, black), color-stop(black), to(transparent));
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5em, black, transparent);
+          mask-image: -webkit-gradient(linear, left top, right top, from(transparent), color-stop(5em, black), color-stop(black), to(transparent));
+          mask-image: linear-gradient(to right, transparent, black 5em, black, transparent);
+  z-index: -1;
+}
+
+div.choices label:hover {
+  background: var(--col-tuscany);
+}
+
+div.choices label:hover a {
+  color: var(--col-black);
+  font-weight: bold;
+}
+
+div.choices label._peek a::before {
+  font-family: var(--font-icon);
+  font-size: 1.5em;
+  line-height: 1.55;
+  vertical-align: middle;
+  content: "visibility";
+  margin-right: 5px;
+}
+div.choices label._peek a::before + * {
+  margin-left: 1em;
+}
+
+#art {
+  display: block;
+  background-color: black;
+  -webkit-mask-image: var(--img-v-matte);
+          mask-image: var(--img-v-matte);
+}

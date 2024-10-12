@@ -1,0 +1,155 @@
+:: cards [widget nobr]
+<<widget "card">>
+    <<drag 'card' type 'card' class `_args[0].class` id `_args[0].id`>>
+        <h3>_args[0].name</h3> 
+        <h2>_args[0].value</h2>
+        <blockquote>_args[0].description</blockquote>
+        <div class="tags">
+        <<if _args[0].tags>>
+            <<for _a to 0; _a lt _args[0].tags.length; _a++>>
+                <icon @class="_args[0].tags[_a]" @data-tooltip="_args[0].tags[_a]"> </icon>
+            <</for>>
+        <</if>>
+        </div>
+        
+        <div class="rewards">
+        <<if _args[0].rewards>>
+            <<for _r to 0; _r lt _args[0].rewards.length; _r++>>
+                <icon @class="_args[0].rewards[_r]" @data-tooltip="_args[0].rewards[_r]"> </icon>
+            <</for>>
+        <</if>>
+        </div>
+        
+        <<data _args[0]>>
+    <</drag>>
+<</widget>>
+
+:: choice_menu [widget nobr]
+<<widget "choice_menu">>
+<div id='menu_choices'>
+    <<for _i, _each range _choice>>
+        <<capture _each, _i>>
+        <<drop 'div' type 'card' id `'choice_'+_i` class `_each.speaker`>>
+            /*  Display the choice's passage text */
+            <div class="choice_text">
+                <<include `State.passage + "-choice_" + _i`>>
+            </div>
+                
+            /* <h2 class="current" data-tooltip="Current value"><<print _each.current>></h2> */
+            <h2 class="value" data-tooltip="Goal value"><<print _each.value>></h2>
+            <div class="rewards">
+                <<for _r, _t range _each.requires>>
+                    <icon @class="_each.requires[_r] + ' ' + _each.id" @data-tooltip="_each.requires[_r]"></icon>
+                <</for>>
+            </div>
+
+            <<onDrop>>
+                <<set _t = 0>>
+                <<set _r = 0>>
+                /* Add the dropped value */
+                <<set _each.value += _drag.data.value>>
+                /* Display the new value of Current Effort */
+                <<replace `'#choice_'+_i+ ' h2.value'`>>
+                    <<print _each.value>>
+                <</replace>>
+
+                /* give the Choice the card's rewards */
+                <<for _t, _r range _drag.data.rewards>>
+                    <<set _each.requires.push(_drag.data.rewards[_t])>>
+                    <<append `'#choice_' + _i + ' > .rewards'`>>
+                        <icon @class="_drag.data.rewards[_t] + ' ' + _drag.data.id" @data-tooltip="_drag.data.rewards[_t]"></icon>
+                    <</append>>
+                <</for>>
+
+                /* give the Choice the card's tags */
+                <<for _t, _r range _drag.data.tags>>
+                    <<set _each.has.push(_drag.data.tags[_t])>>
+                <</for>>
+
+            <<onRemove>>
+                <<set _t = 0>>
+                <<set _r = 0>>
+                <<set _each.value -= _drag.data.value>>
+                <<replace `'#choice_' + _i + ' h2.value'`>>
+                    <<print _each.value>>
+                <</replace>>
+                /*  Remove tags from choice */
+                <<for _t, _r range _drag.data.tags>>
+                    <<set _each.has.deleteAt(_each.has.indexOf(_drag.data.tags[_t]))>>
+                <</for>>
+                /*  Remove rewards from choice */
+                <<for _t, _r range _drag.data.rewards>>
+                    <<set _each.requires.deleteAt(_each.requires.indexOf(_drag.data.rewards[_r]))>>
+                <</for>>
+                <<if _drag.data.rewards.length gt 0>>
+                    <<remove `$('#choice_' + _i + ' > .rewards .' +_drag.data.id)`>>
+                <</if>>
+
+            /* Run pair script */
+            <<onAny>>
+                <<run setup.findTagPairs(_choice[_i], _i)>>
+                /* <<run setup.checkAnguish(_choice[_i], _i)>> */
+                /* Setup consequences */
+                <<set $consequences to setup.getConsequences(_choice, _i)>>
+                <<update>>
+
+        <</drop>>
+        <</capture>>
+    <</for>>
+</div>
+<</widget>>
+
+:: checkConsequences [widget nobr]
+<<widget "checkConsequences">>
+    <<if Object.keys($consequences).length gt 0>>
+        <<runConsequences>>
+    <</if>>
+<</widget>>
+
+:: runConsequences [widget nobr]
+<<widget "runConsequences">><<silently>>
+<<set _delay_num = 0>>
+<<for _term, _value range $consequences>>
+    <<set _i = _value>>  
+    <<capture _term, _value, _i>>
+    <<if setup.tagDictionary.includes(_term)>>
+        <<set _delay = _delay_num + 's'>>
+        <<timed _delay>>
+            <<if _term is "Anguish">>
+                <<repeat 60ms>>
+                    <<if _i gt 0>>
+                        <<set _i -= 1>>
+                        <<set $consequences[_term] = _i>>
+                        <<set $vessel[_term] += 1>>
+                        <<flare `'#' + _term + ' > label'`>>
+                    <<else>>
+                        <<stop>>
+                    <</if>>
+                    <<update>>
+                <</repeat>>
+            <<else>>
+                <<repeat 500ms>>
+                    <<if _i gt 0>>
+                        <<set _i -= 1>>
+                        <<set $consequences[_term] = _i>>
+                        <<set $vessel[_term] += 1>>
+                        <<flare `'#' + _term + ' > label'`>>
+                    <<else>>
+                        <<stop>>
+                    <</if>>
+                    <<update>>
+                <</repeat>>
+            <<update>>
+            <</if>>
+        <</timed>>
+        <<set _delay_num = ((_value / 2) + _delay_num)>>
+    <</if>>
+    <</capture>>
+<</for>>
+
+<<timed _delay>>
+    <<set $consequences = new consequences()>>
+<</timed>>
+
+<</silently>><</widget>>
+

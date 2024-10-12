@@ -1,0 +1,7 @@
+.tippy-box {
+  background-color: var(--ui-medium);
+}
+
+.tippy-arrow::before {
+  border-top-color: var(--ui-medium) !important;
+}

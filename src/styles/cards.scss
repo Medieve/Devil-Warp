@@ -1,0 +1,286 @@
+// #choices {
+//     position: fixed;
+//     width: 70vw;
+//     bottom: 20vh;
+//     left: calc(140px + 50%);
+//     translate: -50% 0;
+//     display: flex;
+//     gap: 1em;
+//     transition: all .2s ease-in;
+// }
+
+#menu_choices {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    float: right;
+    margin-left: 2em;
+    width: 50%;
+    gap: 2em 1em;
+}
+
+#ui-bar.stowed ~ #story .card_hand {
+    left: calc(2em + 50%);
+}
+
+.drag_over {
+    background: red;
+}
+
+#card_hand {
+    position: fixed;
+    bottom: 3vh;
+    width: 90vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    perspective: 3000px;
+    transform-style: preserve-3d;
+
+    transition: all .2s ease-in;
+}
+
+card {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas: 
+        "name name name"
+        "tags value rewards"
+        "quote quote quote";
+    gap: 2px;
+    background: linear-gradient(0deg, var(--mc-main-dark), transparent);
+    backdrop-filter: blur(4px);
+    font-size: 1.2vh;
+    border: 0.2em solid var(--mc-main);
+    border-radius: 15px;
+    padding: .5rem;
+    height: 16vh;
+    width: 12vh;
+
+    transition: all 500ms ease var(--math-bounce);
+    transform-origin: bottom left;
+    
+    filter: drop-shadow(2px 4px 10px var(--mc-main-dark));
+
+    &.demon {
+        background: linear-gradient(0deg, var(--dem-main-dark), transparent);
+        border-color: var(--dem-main);
+        filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+    }
+
+    h2 {
+        display: grid;
+        grid-area: value;
+        place-content: center;
+        align-self: center;
+        width: 2em;
+        aspect-ratio: 1;
+        margin: 0 auto;
+        border: 2px solid var(--ui-accent);
+        border-radius: 50%;
+    }
+    h3 {
+        grid-area: name;
+        margin: 0;
+        line-height: 1;
+        // height: 3em;
+        text-align: center;
+    }
+    blockquote {
+        grid-area: quote;
+        margin: 0;
+        font-size: 0.8em;
+        text-align: center;
+    }
+    .tags {
+        grid-area: tags;
+    }
+    .rewards {
+        grid-area: rewards;
+    }
+    .tags, .rewards {
+        display: flex;
+        gap: 3px;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        icon {
+            height: 2em;
+            width: 2em;
+            border: none;
+            background: var(--ui-dark);
+        }
+    }
+    @for $c from 1 through 7 {
+        &:nth-of-type(#{$c}) {
+            --X: calc(#{($c) * 10px});
+            transform: translateX(var(--X)) translateZ(calc(#{($c) * 1px})) ;
+        }
+    }
+    &:hover {
+    animation: bring-out 240ms forwards var(--math-overshoot);
+    }
+    @keyframes bring-out {
+    0%    { transform: translateX(calc(var(--X))) rotateZ(-4deg); }
+    50%    { transform: translateX(calc(var(--X) - 10px)) rotateZ(-8deg) translateZ(50px); }
+    100%   { transform: translate3d(calc(var(--X)), 0, 300px); }
+    }
+}
+
+icon {
+    position: relative;
+    background: var(--col-black);
+    height: 2.5em;
+    aspect-ratio: 1;
+    display: grid;
+    place-content: center;
+    border: 2px solid white;
+    border-radius: 50%;
+    order: 1;
+
+    &::after {
+        background: var(--ui-light);
+        content: '';
+        position: absolute;
+        background-size: 100%;
+        inset: 0;
+    }
+
+    &.Physicality {
+        &::after {
+            content: '';
+            position: absolute;
+            -webkit-mask-box-image: var(--img-physicality);
+            background-size: 100%;
+            inset: 0;
+        }
+    }
+    &.Cognition {
+        &::after {
+            content: '';
+            position: absolute;
+            -webkit-mask-box-image: var(--img-cognition);
+            background-size: 100%;
+
+            inset: 0;
+        }
+    }
+    &.Magnetism {
+        &::after {
+            content: '';
+            position: absolute;
+            -webkit-mask-box-image: var(--img-magnetism);
+            background-size: 100%;
+            inset: 0;
+        }
+    }
+    &.Anguish::after {
+        content: '';
+        position: absolute;
+        -webkit-mask-box-image: var(--img-anguish);
+        background-size: 100%;
+        inset: 0;
+    }
+
+    &.on {
+        background: var(--ui-accent-dark);
+        border-color: var(--ui-accent);
+        order: 0;
+        &::before {
+            content: '';
+            position: absolute;
+            inset: -0.2em;
+            border-radius: 50%;
+            background: var(--ui-accent);
+            filter: url(#wiggle);
+            z-index: -1;
+        }
+    }
+}
+
+#menu_choices [id^=choice] card {
+    //Cards inside the choice
+    display: grid;
+    place-content: center;
+    background: none;
+    height: 1rem;
+    width: 1rem;
+    padding: 1em;
+    border: none;
+    animation: card-in 200ms ease-in-out;
+    transform: unset;
+    pointer-events: all;
+    h2 {
+        background: none;
+        border: none;
+    }
+    &::before {
+        content: '';
+        position: absolute;
+        inset: .5em;
+        background: var(--col-black);
+        border: 2px solid var(--ui-medium);
+        border-radius: 0;
+        rotate: 45deg;
+        z-index: -1;
+        transition: all .2s ease-in;
+    }
+    &:hover {
+        // height: 4em;
+        // width: 4em;
+        z-index: 99;
+        h3 {
+            display: block;
+        }
+        h3 {
+            font-size: 0.8em;
+            // height: 1em;
+        }
+        h2 {
+            width: 2em;
+            place-self: end;
+        }
+        &::before {
+            inset: 0;
+            rotate: 0deg;
+            transition: none;
+        }
+        &::after {
+            content: '';
+            position: absolute;
+            inset: -5em;
+            border-radius: 100%;
+            background: var(--ui-dark);
+            z-index: -1;
+        }
+    }
+
+    &:not(:hover) {
+        h3, p, blockquote, .rewards, .tags {
+            display: none; 
+        }
+    }
+}
+@keyframes card-in {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+//Cards inside the choice
+.drag_over.macro-drop {
+    background: radial-gradient(ellipse, var(--col-red), transparent)  !important;
+    p {
+        pointer-events: none;
+    }
+}
+
+.initial {
+    border-color: green;
+}
+

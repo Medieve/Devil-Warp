@@ -1,0 +1,76 @@
+#devil-sidebar {
+    position: fixed;
+    display: flex;
+    min-width: 130px;
+    gap: 1rem;
+    > .container > div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 1em;
+    }
+    h2 {
+        font-size: 1em;
+        margin: 0;
+        padding: 0;
+        line-height: 2;
+    }
+    .resources > 
+    label {
+        margin: 0 1em;
+    }
+}
+
+#load-save {
+    position: fixed;
+    display: flex;
+    background: var(--ui-medium);
+    padding: 2em 2em 5em 2em;
+    left: 1vw;
+    top: 15vh;
+    width: 6em;
+    flex-direction: column;
+
+    line-height: 2;
+
+    transform: rotate3d(-1, 1, 0, 19deg);
+    outline: 1px solid var(--ui-light);
+    outline-offset: -0.5em;
+    border: 2px solid var(--ui-light);
+    border-width: 0 2px;
+    border-radius: 0.5em;
+    background: var(--background-hex);
+    background-size: cover;
+    background-blend-mode: lighten, lighten, multiply, lighten, lighten, lighten, normal;
+    background-repeat: no-repeat;
+
+    filter: drop-shadow(0px 0px 16px var(--ui-medium));
+    box-shadow: inset 0 0 16px var(--ui-medium);
+    z-index: 99;
+    a {
+        text-align: center;
+    }
+    > a:hover {
+        background: var(--ui-medium);
+        position: relative;
+        text-decoration: none;
+        &::before {
+            position: absolute;
+            left: -1ch;
+            content: ":";
+        }
+    }
+    .menu_state {
+        font-size: 2em;
+        text-align: center;
+        line-height: 1.5em;
+        a:hover {
+            text-decoration: none;
+            filter: drop-shadow(0px 0px 6px var(--ui-light));
+            &::before {
+                content: "";
+            }
+        } 
+    }
+}
+

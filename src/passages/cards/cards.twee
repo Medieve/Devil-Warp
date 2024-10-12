@@ -1,0 +1,61 @@
+:: card_setup
+
+<<set $cards.push({
+    name: "Indifference",
+    id: "card-indifference",
+    class: "card",
+    value: 10,
+    description: "Your passions lie elsewhere.",
+    tags: ["Cognition"],
+    rewards: []
+})>>
+
+<<set $cards.push({
+    name: "Sedentary",
+    id: "card-sedentary",
+    class: "card",
+    value: 20,
+    description: "You reach for rungs",
+    tags: ["Physicality"],
+    rewards: []
+})>>
+
+<<set $cards.push({
+    name: "Awkward",
+    id: "card-awkward",
+    class: "card",
+    value: 30,
+    description: "First placeholder",
+    tags: ["Physicality"],
+    rewards: []
+})>>
+
+<<set $cards.push({
+    name: "Boredom",
+    id: "card-boredom",
+    class: "card",
+    value: 10,
+    description: "Third placeholder",
+    tags: ["Magnetism"],
+    rewards: []
+})>>
+
+<<set $cards.push({
+    name: "Dull",
+    id: "card-dull",
+    class: "card demon",
+    value: -20,
+    description: "Second placeholder",
+    tags: [],
+    rewards: ["Physicality", "Physicality"]
+})>>
+
+<<set $cards.push({
+    name: "Wandering thought",
+    id: "card-wandering_thought",
+    class: "card demon",
+    value: -30,
+    description: "Second placeholder",
+    tags: [],
+    rewards: ["Magnetism", "Magnetism"]
+})>>
