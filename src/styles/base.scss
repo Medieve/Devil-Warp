@@ -55,7 +55,7 @@
     --img-cognition: url(https://medieve.github.io/Devil-Warp/assets/ico_cognition.svg);
     --img-magnetism: url(https://medieve.github.io/Devil-Warp/assets/ico_magnetism.svg);
     --img-waves: url(https://medieve.github.io/Devil-Warp/assets/layered-waves-haikei.svg);
-    --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.jpg);
+    --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.gif);
 
     --img-devil: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
 
@@ -146,6 +146,7 @@ div#master {
     display: flex;
     gap: 2em;
     min-height: 100vh;
+    padding-right: 1em;
     #menu {
         z-index: 99;
     }
@@ -153,14 +154,13 @@ div#master {
 
 // Art panel
 #art {
-    // position: fixed;
-    // right: 0;
-    // top: 0;
-    // bottom: 0;
-    display: block; 
-    background-color: black;
-    background-attachment: fixed;
+    display: grid; 
+    // background-color: black;
+    background-repeat: no-repeat;
+    background-position: center;
     mask-image: var(--img-v-matte);
+    mask-type: luminance;
+    mask-size: cover;
     width: 30%;
     z-index: -1;
 }

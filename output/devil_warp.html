@@ -148,7 +148,7 @@ var LZString={_keyStr:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234
   --img-cognition: url(https://medieve.github.io/Devil-Warp/assets/ico_cognition.svg);
   --img-magnetism: url(https://medieve.github.io/Devil-Warp/assets/ico_magnetism.svg);
   --img-waves: url(https://medieve.github.io/Devil-Warp/assets/layered-waves-haikei.svg);
-  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.jpg);
+  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.gif);
   --img-devil: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
   font-family: "Offside", sans-serif;
   color: var(--ui-light);
@@ -247,17 +247,22 @@ div#master {
   display: flex;
   gap: 2em;
   min-height: 100vh;
+  padding-right: 1em;
 }
 div#master #menu {
   z-index: 99;
 }
 
 #art {
-  display: block;
-  background-color: black;
-  background-attachment: fixed;
+  display: -ms-grid;
+  display: grid;
+  background-repeat: no-repeat;
+  background-position: center;
   -webkit-mask-image: var(--img-v-matte);
           mask-image: var(--img-v-matte);
+  mask-type: luminance;
+  -webkit-mask-size: cover;
+          mask-size: cover;
   width: 30%;
   z-index: -1;
 }
@@ -3732,7 +3737,36 @@ function initializeTooltipObserver() {
       `;
       return output;
     }
-  });</script><tw-passagedata pid="1" name="widget" tags="widget" position="100,100" size="100,100">&lt;&lt;widget &quot;modalChoice&quot;&gt;&gt;
+  });
+/* twine-user-script #10: "passage.js" */
+$(document).ready(function() {
+    // Get the initial position of the container when the page renders
+    const artContainer = $(`#art`);
+    let containerOffset = artContainer.offset().top;
+    let scrollTop = $(window).scrollTop();
+    let adjustedPosition = containerOffset + scrollTop;
+
+    // Update the background position based on scroll
+    artContainer.css('background-position', `center ${adjustedPosition}px`);
+
+    $(window).on('scroll', function() {
+        let containerOffset = artContainer.offset().top;
+        let scrollTop = $(window).scrollTop();
+        let adjustedPosition = containerOffset + scrollTop;
+        
+        // Update the background position based on scroll
+        artContainer.css('background-position', `center ${adjustedPosition}px`);
+    });
+});
+
+// <<art "url">> macro to set the background image of the #art element
+Macro.add("art", {
+    handler() {
+        let artURL = this.args[0];
+        let artContainer = $(`#art`);
+        artContainer.css("background-image", `url(${artURL})`);
+    }
+});</script><tw-passagedata pid="1" name="widget" tags="widget" position="100,100" size="100,100">&lt;&lt;widget &quot;modalChoice&quot;&gt;&gt;
     &lt;label class=&quot;choice&quot;&gt;
         &lt;&lt;link $args[0]&gt;&gt;
         $args[2]
@@ -4198,7 +4232,8 @@ function initializeTooltipObserver() {
 
 &lt;p&gt;The scavengers will find the shreds of your Demonic Might that you have already stripped, but you are unconcerned. You are nothing but a self-starter, you have established a dominion in Hell; You will again on the other side. The fact that your demonic vastness prevents you from entering the Tear is show enough for your abilities. Yet you should be aware, while success is all but guaranteed for you, the road may be difficult. You must show unholy wisdom in what you will leave behind.&lt;/p&gt;
 
-&lt;&lt;replace &quot;#art&quot;&gt;&gt;&lt;img src=&quot;https://medieve.github.io/Devil-Warp/assets/devil.jpg&quot; alt=&quot;Devil&quot; /&gt;&lt;&lt;/replace&gt;&gt;
+&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg&quot;&gt;&gt;
+
 &lt;div class=&quot;margin choices&quot;&gt;
 &lt;label&gt;
         &lt;&lt;link &quot;&lt;&lt;radiobutton &#39;$lostItem&#39; &#39;orb&#39; checked&gt;&gt;Your brass Orb&quot;&gt;&gt;

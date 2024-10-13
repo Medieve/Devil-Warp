@@ -47,7 +47,7 @@
   --img-cognition: url(https://medieve.github.io/Devil-Warp/assets/ico_cognition.svg);
   --img-magnetism: url(https://medieve.github.io/Devil-Warp/assets/ico_magnetism.svg);
   --img-waves: url(https://medieve.github.io/Devil-Warp/assets/layered-waves-haikei.svg);
-  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.jpg);
+  --img-v-matte: url(https://medieve.github.io/Devil-Warp/assets/vertical_matte.gif);
   --img-devil: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
   font-family: "Offside", sans-serif;
   color: var(--ui-light);
@@ -146,17 +146,22 @@ div#master {
   display: flex;
   gap: 2em;
   min-height: 100vh;
+  padding-right: 1em;
 }
 div#master #menu {
   z-index: 99;
 }
 
 #art {
-  display: block;
-  background-color: black;
-  background-attachment: fixed;
+  display: -ms-grid;
+  display: grid;
+  background-repeat: no-repeat;
+  background-position: center;
   -webkit-mask-image: var(--img-v-matte);
           mask-image: var(--img-v-matte);
+  mask-type: luminance;
+  -webkit-mask-size: cover;
+          mask-size: cover;
   width: 30%;
   z-index: -1;
 }
