@@ -159,7 +159,7 @@ div#master {
     background-repeat: no-repeat;
     background-position: center;
     mask-image: var(--img-v-matte);
-    mask-type: luminance;
+    mask-mode: luminance;
     mask-size: cover;
     width: 30%;
     z-index: -1;
