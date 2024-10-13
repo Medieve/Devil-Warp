@@ -144,7 +144,6 @@ video#ink-corner {
 
 div#master {
     display: flex;
-    gap: 2em;
     min-height: 100vh;
     padding-right: 1em;
     #menu {
@@ -179,7 +178,7 @@ div#master {
     
     width: calc(140ch + var(--__padding) * 2);
     margin-top: 15vh;
-    margin-left: 6vw;
+    margin-left: 12vw;
     height: max-content;
     bottom: 0;
     
