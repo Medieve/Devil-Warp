@@ -9,6 +9,8 @@
 
 <p>You need to be free, and freedom has come in the form of a tear in your prison. The tear appeared to you like a quickly scabbing wound, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other to reach it. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be an easy thing to transform into a more fluid form if this was a common opening, but Hell is made of more complex dimensions than physical boundaries. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
 
+<<art "https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg">>
+
 [[You take a moment -> start_take_a_moment]]
 
 :: start_take_a_moment
