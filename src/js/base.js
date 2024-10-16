@@ -1,5 +1,5 @@
-config.cleanupWikifierOutput = false;
-config.passages.nobr = true;
+Config.cleanupWikifierOutput = false;
+Config.passages.nobr = true;
 setup.release = false;
 var scriptsLoaded = false;
 setup.tagDictionary = ["Physicality", "Cognition", "Magnetism", "Suspicion", "Anguish"];
@@ -62,16 +62,16 @@ function debounce(func, delay) {
 
 // Choice constructor
 window.choice = class choice {
-    constructor(config = null){
+    constructor(Config = null){
       this.current = 0;
       this.value = 0;
       this.has = [];
       this.requires = [];
       this.speaker = "vessel";
     
-      if(config != null) {
-        Object.keys(config).forEach(function (pn) {
-          this[pn] = clone(config[pn]);
+      if(Config != null) {
+        Object.keys(Config).forEach(function (pn) {
+          this[pn] = clone(Config[pn]);
         }, this);
       }
     }
@@ -90,16 +90,16 @@ window.choice = class choice {
 
 // Consequence class
 window.consequences = class consequences {
-  constructor(config = null){
+  constructor(Config = null){
     this.Physicality = 0;
     this.Cognition = 0;
     this.Magnetism = 0;
     this.Anguish = 0;
     this.Suspicion = 0;
   
-    if(config != null) {
-      Object.keys(config).forEach(function (pn) {
-        this[pn] = clone(config[pn]);
+    if(Config != null) {
+      Object.keys(Config).forEach(function (pn) {
+        this[pn] = clone(Config[pn]);
       }, this);
     }
   }

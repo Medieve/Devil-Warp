@@ -7,6 +7,7 @@
 <</nobr>><</widget>>
 
 :: flare [widget nobr]
+/* Causes an element to glow for a half second */
 <<widget "flare">>
     <<toggleclass _args[0] 'flare'>>
     <<timed 400ms>>
@@ -15,6 +16,7 @@
 <</widget>>
 
 :: card_link [widget nobr]
+/* Creates a link, fires its code and then saves the current hand */
 <<widget "card_link" container>>
     <<link _args[0] _args[1]>>
         <<set $old_hand to clone($current_hand)>>

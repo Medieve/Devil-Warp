@@ -26,3 +26,41 @@ Macro.add("art", {
         artContainer.css("background-image", `url(${artURL})`);
     }
 });
+
+// Radiolink
+Macro.add("radiolink", {
+	isAsync : true,
+	tags    : null,
+
+	handler() {
+		if (this.args.length === 0) {
+			return this.error(`no ${this.name === 'button' ? 'button' : 'link'} text specified`);
+		}
+
+		// const $link = jQuery(document.createElement(this.name === 'button' ? 'button' : 'a'));
+        
+        const $radio = jQuery(document.createElement('input'))
+            .attr('type', 'radio')
+            .attr('name', this.args[1]);
+        const $label = jQuery(document.createElement('label'))
+		let passage;
+		$label
+			.addClass(`radio macro-${this.name}`)
+			.ariaClick({
+				namespace : '.macros',
+				role      : passage != null ? 'link' : 'button', // lazy equality for null
+				one       : passage != null // lazy equality for null
+			}, this.shadowHandler(
+				this.payload[0].contents !== ''
+					? () => Wikifier.wikifyEval(this.payload[0].contents.trim())
+					: null,
+				passage != null // lazy equality for null
+					? () => Engine.play(passage)
+					: null
+			))
+            .append($radio)
+            .append(this.args[0])
+            
+            .appendTo(this.output);
+	}
+});

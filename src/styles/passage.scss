@@ -176,16 +176,17 @@ span.infernal {
     }
 }
 
-div.choices {
+div.radio {
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     margin-bottom: 1em;
 }
-div.choices label {
+label.radio {
     display: block;
     position: relative;
     padding: 5px;
+    margin: 0.5em 0;
     
     &::before {
         position: absolute;
@@ -198,18 +199,19 @@ div.choices label {
     }
 }
 
-div.choices label:hover {
+label.radio:hover {
     background: var(--col-tuscany);
-}
-div.choices label:hover a {
-    color: var(--col-black);
-    font-weight: bold;
+    
+    a {
+        color: var(--col-black);
+        font-weight: bold;
+    }
 }
 
 
 // Eye icon for choice peeks
 
-div.choices label._peek a::before {
+div.radio a._peek::after {
     font-family: var(--font-icon);
     font-size: 1.5em;
     line-height: 1.55;

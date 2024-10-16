@@ -221,7 +221,7 @@ span.infernal::before {
           filter: url(#squiggle);
 }
 
-div.choices {
+div.radio {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -233,12 +233,13 @@ div.choices {
   margin-bottom: 1em;
 }
 
-div.choices label {
+label.radio {
   display: block;
   position: relative;
   padding: 5px;
+  margin: 0.5em 0;
 }
-div.choices label::before {
+label.radio::before {
   position: absolute;
   content: "";
   inset: 0;
@@ -251,16 +252,15 @@ div.choices label::before {
   z-index: -1;
 }
 
-div.choices label:hover {
+label.radio:hover {
   background: var(--col-tuscany);
 }
-
-div.choices label:hover a {
+label.radio:hover a {
   color: var(--col-black);
   font-weight: bold;
 }
 
-div.choices label._peek a::before {
+div.radio a._peek::after {
   font-family: var(--font-icon);
   font-size: 1.5em;
   line-height: 1.55;
@@ -268,6 +268,6 @@ div.choices label._peek a::before {
   content: "visibility";
   margin-right: 5px;
 }
-div.choices label._peek a::before + * {
+div.radio a._peek::after + * {
   margin-left: 1em;
 }

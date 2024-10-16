@@ -42,6 +42,9 @@
             },
             "card_link": {
                 "container": true
+            },
+            "radiolink": {
+                "container": true
             }
 
         }

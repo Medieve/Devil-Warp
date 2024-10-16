@@ -9,6 +9,7 @@ function initializeTooltipObserver() {
             validTooltipSelectors.forEach((selector) => {
               if (node.matches(selector)) {
                 setTippy(node);
+                console.log('set tippy on node', node);
               }
             });
             

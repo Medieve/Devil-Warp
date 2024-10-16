@@ -7,40 +7,44 @@
 :: start_pain
 <p>Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a <<define "Deluder">>, it is not enough.</p>
 
-<p>You need to be free, and freedom has come in the form of a tear in your prison. The tear appeared to you like a quickly scabbing wound, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other to reach it. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be an easy thing to transform into a more fluid form if this was a common opening, but Hell is made of more complex dimensions than physical boundaries. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
+<p>You need to be free, and freedom has come in the form of a tear in your prison. The tear appears to you like a torn tear, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
 
 <<art "https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg">>
 
 [[You take a moment -> start_take_a_moment]]
 
 :: start_take_a_moment
-
-<p>As you consider what parts of you to  consider your options and gaze out at your <span class="infernal">infernal domain</span>. The open-balconies cinquefoil chamber is surfaced with glistening, tight ridges of skin to create an irregular pattern underneath the sole. The arches that divides the chamber into its five lobes are ribbed, pulsing gently as they soar overhead into engorged heads that sporadically weep a thin lubricant. </p>
-
-<p>The scavengers will find the shreds of your Demonic Might that you have already stripped, but you are unconcerned. You are nothing but a self-starter, you have established a dominion in Hell; You will again on the other side. The fact that your demonic vastness prevents you from entering the Tear is show enough for your abilities. Yet you should be aware, while success is all but guaranteed for you, the road may be difficult. You must show unholy wisdom in what you will leave behind.</p>
-
 <<art "https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg">>
 
-<div class="margin choices">
-<label>
-        <<link "<<radiobutton '$lostItem' 'orb' checked>>Your brass Orb">>
-                <<replace "#item_description">>An icon of your station and Authority, plundered from Saint Edmund after he was killed by Vikings. Saturated with an aura of your Demonic Might, it is a powerful tool for establishing dominion over lesser demons and aery spirits. Without this item, those same spirits will need to be convinced of your supremacy. <</replace>>
-        <</link>>
-</label>
-<label>
-        <<link "<<radiobutton '$lostItem' 'eye'>>A sapphire Eye">>
-                <<replace "#item_description">>Recovered from a 12th-century witch accused of casting her Evil Eye on the sons of a Toulouse Count. Still imbued with her supernatural power, this tool will give glimpses into the past and future of those you meet, though the information these visions afford tend to be less direct. Without this item you won't be privy to those subtle secrets and you will have to rely on your own wits and senses.<</replace>>
-        <</link>>
-</label>
-<label>
-        <<link "<<radiobutton '$lostItem' 'whip'>>A Black Whip">>
-                <<replace "#item_description">>From the tomb of Roman Consul Apronius, this whip is woven from the torn hairs of deserting soldiers. This glistening whip is thick with vigor taken from those it has punished. Amongst its practical and more "fun" uses, its power comes from the energy it now bestows to those you find yourself riding. Without this tool, those you possess will naturally lack the energy to accomplish all what your ambitions will demand.<</replace>>
-        <</link>>
-</label>
-</div>
+<p>Your open cinquefoil court is surfaced with glistening tight ridges. The arches that divides the court into its five lobes are ribbed, pulsing gently as they soar overhead into engorged heads that sporadically weep a thin lubricant. </p>
+
+<p>The scavengers will find the stripped shreds of your demonic might, but you are unconcerned. You are nothing but a self-starter, you have established a dominion in Hell; While success is all but guaranteed for you, the road may be difficult. You must show unholy wisdom in what you will leave behind.</p>
+
+<<radiolink "A brass orb" "lostItem">>
+        <<set $lostItem to 'orb'>>
+        <<redo>>
+        <<replace "#item_description">>An icon of your station and Authority, plundered from Saint Edmund after he was killed by Vikings. Saturated with an aura of your Demonic Might, it is a powerful tool for establishing dominion over lesser demons and aery spirits. Without this item, those same spirits will need to be convinced of your supremacy. <</replace>>
+<</radiolink>>
+
+<<radiolink "A sapphire eye" "lostItem">>
+        <<set $lostItem to 'eye'>>
+        <<redo>>
+        <<replace "#item_description">>Recovered from a 12th-century witch accused of casting her Evil Eye on the sons of a Toulouse Count. Still imbued with her supernatural power, this tool will give glimpses into the past and future of those you meet, though the information these visions afford tend to be less direct. Without this item you won't be privy to those subtle secrets and you will have to rely on your own wits and senses.<</replace>>
+<</radiolink>>
+
+<<radiolink "A black whip" "lostItem">>
+        <<set $lostItem to 'whip'>>
+        <<redo>>
+        <<replace "#item_description">>From the tomb of Roman Consul Apronius, this whip is woven from the torn hairs of deserting soldiers. This glistening whip is thick with vigor taken from those it has punished. Amongst its practical and more "fun" uses, its power comes from the energy it now bestows to those you find yourself riding. Without this tool, those you possess will naturally lack the energy to accomplish all what your ambitions will demand.<</replace>>
+<</radiolink>>
+
 //<p id="item_description">What tool will you leave behind?</p>//
 
-[[Continue|start_make_demon1]]
+<<do>>
+        <<if $lostItem>>
+                [[Continue|start_make_demon1]]
+        <</if>>
+<</do>>
 
 :: start_make_demon1
 <<switch $lostItem>>
