@@ -34,6 +34,7 @@ jquery: on
 }>>
 <<set $cards = []>>
 <<include 'card_setup'>>
+<<include 'card_engineer'>>
 <<set $old_hand = []>>
 <<set $future_hand = []>>
 <<set $current_hand = $cards.randomMany(4)>>

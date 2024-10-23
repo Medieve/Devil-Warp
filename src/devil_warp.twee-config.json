@@ -45,6 +45,9 @@
             },
             "radiolink": {
                 "container": true
+            },
+            "art": {
+                "container": false
             }
 
         }

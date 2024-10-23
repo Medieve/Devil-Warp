@@ -91,9 +91,12 @@ An imp picks up the orb.
 <p>You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.</p>
 
 :: start_the_host
-<p>Your Aether swells out into his chord of destiny but in an unexpectedly limited fashion– few nodes of consequence flare weakly in your vision. Even with this thin thread of destiny your current amount of Aether stretches mere days into the future. Your manipulations will be less delicate but now even those will need to wait as a more pressing problem rises to your immediate awareness. The vessel’s mind has more than the expected number of occupants.</p> 
+<p>Through the opening you find a chaotic scene: flows of dimensional tatters have ripped through a laboratory, a riot of flashing energy and rains of sparks fall down from fixtures, echoes of demonic cackling escape into half-shut containment doors and two men in the throes of changes. </p>
 
-<p>There is an artificial intelligence on the periphery of the human one. Not sophisticated enough to identify what you are, nonetheless it seems equipped enough to understand that there is a new presence– one which it has decided is hostile. </p>
+<p>A man in a lab coat is mesmerized by an image of himself being knit together by liquid light, cloned by pseudo matter pulled from a mirror reality. </p>
 
-[[Fall to darkness -> night_start]]
+<p>On the other side of the room is a man in coveralls, knocked down and gasping as semen pumps from a device installed around his crotch. </p>
 
+<<link "They glow with destiny and potency." "character_select">>
+        <<set $act to 1>>
+<</link>>

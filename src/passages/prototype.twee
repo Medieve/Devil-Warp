@@ -2,10 +2,11 @@
 <<silently>><<set _choice = [
     new choice({
         value: 50,
-        requires: ["Anguish", "Cognition"]
+        requires: ["Anguish", "Cognition", "Cognition"]
     }),
     new choice({
         value: 40,
+        requires: ["Anguish", "Physicality", "Physicality"]
     }),
     new choice({
         value: 40,

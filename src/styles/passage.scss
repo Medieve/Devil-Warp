@@ -223,3 +223,42 @@ div.radio a._peek::after {
     }
 }
 
+#character_menu {
+    position: fixed;
+    width: auto;
+    display: flex;
+    top: 10vh;
+    list-style-type: none;
+    padding: 0;
+    li {
+        margin: 1rem;
+        // opacity: 0;
+        transition: all 500ms ease-out;
+        animation: floatIn 500ms forwards ease-out;
+        a {
+            display: block;
+            height: 80vh;
+            aspect-ratio: 1 / 1.5;
+            background-image: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+
+            text-align: center;
+            font-size: 2em;
+        }
+        &#engineer {
+            transform: translateX(50%);
+        }
+        &#scientist {
+            transform: translateX(-50%);
+        }
+    }
+}
+
+@keyframes floatIn {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+

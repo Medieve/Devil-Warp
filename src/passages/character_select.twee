@@ -1,0 +1,26 @@
+:: character_select
+<<done>>
+    <<if $act is 1>>
+        <<art "https://medieve.github.io/Devil-Warp/assets/engineer_pent.jpg" "#engineer a">>
+        <</if>>
+    <</done>>
+
+<ul id="character_menu">
+    <li id="engineer">
+        <<link "The Engineer">>
+            <<set $character = "engineer">>
+            <<if $act is 1>>
+                <<goto "act1_e-escape">>
+                <<elseif $act is 2>>
+                    <<goto "act2_e-escape">>
+                <<elseif $act is 3>>
+                    <<goto "act3_e-escape">>
+                <</if>>
+        <</link>>
+    </li>
+    <li id="scientist">
+        <<link "The Scientist">>
+            <<set $character = "scientist">>
+        <</link>>
+    </li>
+</ul>

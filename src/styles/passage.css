@@ -271,3 +271,55 @@ div.radio a._peek::after {
 div.radio a._peek::after + * {
   margin-left: 1em;
 }
+
+#character_menu {
+  position: fixed;
+  width: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  top: 10vh;
+  list-style-type: none;
+  padding: 0;
+}
+#character_menu li {
+  margin: 1rem;
+  -webkit-transition: all 500ms ease-out;
+  transition: all 500ms ease-out;
+  -webkit-animation: floatIn 500ms forwards ease-out;
+          animation: floatIn 500ms forwards ease-out;
+}
+#character_menu li a {
+  display: block;
+  height: 80vh;
+  aspect-ratio: 1/1.5;
+  background-image: url(https://medieve.github.io/Devil-Warp/assets/devil.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  text-align: center;
+  font-size: 2em;
+}
+#character_menu li#engineer {
+  -webkit-transform: translateX(50%);
+          transform: translateX(50%);
+}
+#character_menu li#scientist {
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+@-webkit-keyframes floatIn {
+  to {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes floatIn {
+  to {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+}

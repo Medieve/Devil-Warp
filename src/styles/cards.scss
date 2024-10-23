@@ -31,6 +31,7 @@
     position: fixed;
     bottom: 3vh;
     width: 90vw;
+    pointer-events: none;
 
     display: flex;
     flex-direction: row;
@@ -40,6 +41,9 @@
     transform-style: preserve-3d;
 
     transition: all .2s ease-in;
+
+    border: none; 
+    background: radial-gradient(ellipse, var(--ui-dark) 30%, transparent 60%);
 }
 
 card {
@@ -51,6 +55,7 @@ card {
         "tags value rewards"
         "quote quote quote";
     gap: 2px;
+    pointer-events: auto;
     background: linear-gradient(0deg, var(--mc-main-dark), transparent);
     backdrop-filter: blur(4px);
     font-size: 1.2vh;
@@ -195,7 +200,7 @@ icon {
             inset: -0.2em;
             border-radius: 50%;
             background: var(--ui-accent);
-            filter: url(#wiggle);
+            filter: url(#wiggle) drop-shadow(0 0 1px var(--ui-accent)) drop-shadow(0 0 4px var(--ui-accent));
             z-index: -1;
         }
     }

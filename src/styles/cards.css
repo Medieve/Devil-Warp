@@ -26,6 +26,7 @@
   position: fixed;
   bottom: 3vh;
   width: 90vw;
+  pointer-events: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -42,6 +43,8 @@
           transform-style: preserve-3d;
   -webkit-transition: all 0.2s ease-in;
   transition: all 0.2s ease-in;
+  border: none;
+  background: radial-gradient(ellipse, var(--ui-dark) 30%, transparent 60%);
 }
 
 card {
@@ -53,6 +56,7 @@ card {
   -ms-grid-rows: auto 2px auto 2px auto;
       grid-template-areas: "name name name" "tags value rewards" "quote quote quote";
   gap: 2px;
+  pointer-events: auto;
   background: -webkit-gradient(linear, left bottom, left top, from(var(--mc-main-dark)), to(transparent));
   background: linear-gradient(0deg, var(--mc-main-dark), transparent);
   -webkit-backdrop-filter: blur(4px);
@@ -271,8 +275,8 @@ icon.on::before {
   inset: -0.2em;
   border-radius: 50%;
   background: var(--ui-accent);
-  -webkit-filter: url(#wiggle);
-          filter: url(#wiggle);
+  -webkit-filter: url(#wiggle) drop-shadow(0 0 1px var(--ui-accent)) drop-shadow(0 0 4px var(--ui-accent));
+          filter: url(#wiggle) drop-shadow(0 0 1px var(--ui-accent)) drop-shadow(0 0 4px var(--ui-accent));
   z-index: -1;
 }
 

@@ -22,7 +22,7 @@ $(document).ready(function() {
 Macro.add("art", {
     handler() {
         let artURL = this.args[0];
-        let artContainer = $(`#art`);
+        let artContainer = this.args[1] ? $(this.args[1]) : $(`#art`);
         artContainer.css("background-image", `url(${artURL})`);
     }
 });
