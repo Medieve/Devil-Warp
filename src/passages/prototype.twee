@@ -14,6 +14,7 @@
     })
 ]>>
 <<set $day = true>>
+<<art "https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg">>
  <</silently>>
  <<choice_menu>>
 <p>As $vessel.name awakens with a pounding headache, his eyes squint into the dimly lit wreckage of the room. </p>

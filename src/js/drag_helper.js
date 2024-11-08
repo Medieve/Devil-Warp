@@ -9,9 +9,10 @@ setup.card_setup = function() {
   // Add the ondragstart event listener
   cards.forEach(card => {
     card.addEventListener("dragstart", dragstart_handler);
+    card.addEventListener('dragend', dragEnd);
   })
   // Add listeners to drop_pit
-  var collectPits = document.querySelectorAll("[id^='choice']");
+  var collectPits = document.querySelectorAll("[id^='choice'], #card_hand");
   collectPits.forEach( box => {
       box.addEventListener('dragenter', dragEnter)
       box.addEventListener('dragover', dragOver);
@@ -39,14 +40,20 @@ function collectDropPits() {
 function dragstart_handler(ev) {
   setup.log("dragStart");
   // Find choices and disable pointer events
-  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card)");
+  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card), #card_hand");
   choices.forEach( choice => {
     choice.style.pointerEvents = "none";
+  });
+  // Highlight the macro-drop
+  var dropPits = document.querySelectorAll(".macro-drop");
+  dropPits.forEach( dropPit => {
+    dropPit.classList.add('dragHighlight');
   });
 }
 
 function dragEnter(ev) {
   ev.preventDefault();
+  setup.log("dragOver");
   ev.target.classList.add('drag_over');
 }
 
@@ -66,6 +73,20 @@ function drop(ev) {
   var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card)");
   choices.forEach( choice => {
     choice.style.pointerEvents = "all";
+  });
+}
+
+function dragEnd(ev) {
+  ev.preventDefault();
+  setup.log("dragEnd");
+  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card), #card_hand");
+  choices.forEach( choice => {
+    choice.style.pointerEvents = "all";
+  });
+  // remove highlight from macro-drop
+  var dropPits = document.querySelectorAll(".macro-drop");
+  dropPits.forEach( dropPit => {
+    dropPit.classList.remove('dragHighlight');
   });
 }
 

@@ -1,0 +1,94 @@
+:: demon_cards_initial
+
+/* Infernal Grip - 10 P
+Forbidden Hunger -15
+Edge's Strain -20
+
+Red Veil -10
+Sin's Clarity -15
+Piercing Focus - 20
+
+Enthralling Word - 10
+Delighting Wink -15
+Commanding Tug -20 */
+
+<<set $cards.push(new card({
+    name: "Infernal Grip",
+    id: "card-infernal_grip",
+    class: "card demon",
+    value: -10,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Physicality"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Forbidden Hunger",
+    id: "card-forbidden_hunger",
+    class: "card demon",
+    value: -15,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Physicality", "Physicality"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Edge's Strain",
+    id: "card-edges_strain",
+    class: "card demon",
+    value: -20,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Physicality", "Physicality", "Magnetism"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Red Veil",
+    id: "card-red_veil",
+    class: "card demon",
+    value: -10,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Cognition"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Sin's Clarity",
+    id: "card-sins_clarity",
+    class: "card demon",
+    value: -15,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Cognition", "Cognition"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Piercing Focus",
+    id: "card-piercing_focus",
+    class: "card demon",
+    value: -20,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Cognition", "Cognition", "Physicality"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Enthralling Word",
+    id: "card-enthralling_word",
+    class: "card demon",
+    value: -10,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Magnetism"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Delighting Wink",
+    id: "card-delighting_wink",
+    class: "card demon",
+    value: -15,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Magnetism", "Magnetism"]
+}))>>
+
+<<set $cards.push(new card({
+    name: "Commanding Tug",
+    id: "card-commanding_tug",
+    class: "card demon",
+    value: -20,
+    description: "Second placeholder",
+    rewards: ["Anguish", "Magnetism", "Magnetism", "Cognition"]
+}))>>

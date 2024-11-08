@@ -7,7 +7,7 @@
 :: start_pain
 <p>Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a <<define "Deluder">>, it is not enough.</p>
 
-<p>You need to be free, and freedom has come in the form of a tear in your prison. The tear appears to you like a torn tear, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
+<p>You need to be free, and freedom has come in the form of a tear in your prison. The tear is rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more 'presence' to navigate this opening.</p>
 
 <<art "https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg">>
 
@@ -41,8 +41,12 @@
 //<p id="item_description">What tool will you leave behind?</p>//
 
 <<do>>
-        <<if $lostItem>>
-                [[Continue|start_make_demon1]]
+        <<if $lostItem is "orb">>
+                [[Leave your orb behind|start_make_demon1]]
+                <<elseif $lostItem is "eye">>
+                        [[Leave your Eye behind|start_make_demon1]]
+                <<elseif $lostItem is "whip">>
+                        [[Leave your Whip behind|start_make_demon1]]
         <</if>>
 <</do>>
 

@@ -4,6 +4,7 @@ setup.release = false;
 var scriptsLoaded = false;
 setup.tagDictionary = ["Physicality", "Cognition", "Magnetism", "Suspicion", "Anguish"];
 
+
 $(document).on(':storyready', function () {
   console.log("Story ready");
   importScripts([

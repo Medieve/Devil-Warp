@@ -3,6 +3,22 @@
 // choice.has = ["dom", "dom"];
 // choice.requires = ["dom", "dom"];
 
+window.card = class card {
+    constructor(config = null) {
+        this.name = "";
+        this.description = "";
+        this.class = "card";
+        this.value = 0;
+        this.tags = [];
+        this.rewards = [];
+        
+        if(config != null)
+          Object.keys(config).forEach((pn) => {
+            this[pn] = clone(config[pn]);
+          });
+    }
+}
+
 setup.findTagPairs = function(choice, _i) {
     const pairs = [];
     const tags = choice.has;

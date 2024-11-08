@@ -262,3 +262,38 @@ div.radio a._peek::after {
     }
 }
 
+.say {
+    border: 1px solid #eee;
+    overflow: auto;
+}
+
+.say > img {
+    max-width: 20%;
+    float: left;
+    margin-right: 1em;
+}
+
+.say > p:first-of-type {
+    font-weight: bold;
+    margin: 0.2em 0;
+    border-bottom: 1px solid #eee;
+}
+
+.say > p:last-of-type {
+    padding: 0.5em;
+    margin: 0;
+}
+
+.speech {
+    border: var(--ui-accent-dark) 2px solid;
+    border-radius: 1em;
+    overflow: auto;
+    padding: 0 1em;
+    h2 {
+        margin: 0;
+        font-size: 0.8em;
+    }
+    p {
+        text-indent: calc(1em - 2px);
+    }
+}
