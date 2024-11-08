@@ -1,2 +1,34 @@
 :: act1_e-escape
+<<set _choice = [
+    new choice({
+        value: 50,
+        requires: ["Anguish", "Cognition", "Cognition"]
+    }),
+    new choice({
+        value: 40,
+        requires: ["Anguish", "Physicality", "Physicality"]
+    }),
+    new choice({
+        value: 40,
+        /* speaker: 'demon' */
+    })
+]>>
+<<choice_menu>>
+<<done>>
+<<run setup.card_setup()>>
+<</done>>
 <<set $day to true>>
+<<kai>>Fuck fuck fuck fuck fuck..!<</kai>>
+
+<p>Amid the smoking and sparking chaos of the laboratory, a man thrashes on the floor, wearing steam-covered goggles as he gasps in forced pleasure. Powerful spurts of cum arc into the air in regular intervals from a bulky device strapped around his augmented groin. </p>
+
+<<ai>>Warning, auxiliary nutrients running low! Please perform override on pump protocols. <</ai>>
+
+:: act1_e-escape-choice_0
+Diagnose energy surge. 
+
+:: act1_e-escape-choice_1
+Repair the pump protocol.
+
+:: act1_e-escape-choice_2
+Recirculate the cum back into your system. 

@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://8C9DACB5-ADBA-459B-81EF-71A7D96DAF43// --><tw-storydata name="Devil Warp" startnode="34" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="8C9DACB5-ADBA-459B-81EF-71A7D96DAF43" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "base.css" */
+	<!-- UUID://8C9DACB5-ADBA-459B-81EF-71A7D96DAF43// --><tw-storydata name="Devil Warp" startnode="39" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="8C9DACB5-ADBA-459B-81EF-71A7D96DAF43" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "base.css" */
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Geo&family=Offside&family=Uncial+Antiqua&family=UnifrakturCook&display=swap");
 :root {
   --font-text: "Offside";
@@ -508,6 +508,7 @@ input[type=radio]:checked, input[type=checkbox]:checked {
   position: fixed;
   bottom: 3vh;
   width: 90vw;
+  min-height: 20vh;
   pointer-events: none;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -523,9 +524,7 @@ input[type=radio]:checked, input[type=checkbox]:checked {
           perspective: 3000px;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
-  -webkit-transition: all 0.2s ease-in;
-  transition: all 0.2s ease-in;
-  border: none;
+  border: transparent 2px solid;
   background: radial-gradient(ellipse, var(--ui-dark) 30%, transparent 60%);
 }
 
@@ -863,12 +862,16 @@ icon.on::before {
   min-height: 3em;
   min-width: 3em;
   display: flex;
-align-items: center;
-justify-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .macro-drag {cursor:grab;
   user-select: none;}
+
+.dragHighlight, .drag-over {
+  border: var(--ui-light) 2px dashed !important;
+}
 /* twine-user-stylesheet #4: "passage.css" */
 .margin {
   margin: 1em 0;
@@ -1194,6 +1197,41 @@ div.radio a._peek::after + * {
             transform: translateX(0);
     opacity: 1;
   }
+}
+.say {
+  border: 1px solid #eee;
+  overflow: auto;
+}
+
+.say > img {
+  max-width: 20%;
+  float: left;
+  margin-right: 1em;
+}
+
+.say > p:first-of-type {
+  font-weight: bold;
+  margin: 0.2em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.say > p:last-of-type {
+  padding: 0.5em;
+  margin: 0;
+}
+
+.speech {
+  border: var(--ui-accent-dark) 2px solid;
+  border-radius: 1em;
+  overflow: auto;
+  padding: 0 1em;
+}
+.speech h2 {
+  margin: 0;
+  font-size: 0.8em;
+}
+.speech p {
+  text-indent: calc(1em - 2px);
 }
 /* twine-user-stylesheet #5: "sidebar.css" */
 #devil-sidebar {
@@ -2960,6 +2998,7 @@ setup.release = false;
 var scriptsLoaded = false;
 setup.tagDictionary = ["Physicality", "Cognition", "Magnetism", "Suspicion", "Anguish"];
 
+
 $(document).on(':storyready', function () {
   console.log("Story ready");
   importScripts([
@@ -3087,6 +3126,22 @@ function capitalize(str) {
 // For some context, function is being passed a choice.object, which is an object with the following properties:
 // choice.has = ["dom", "dom"];
 // choice.requires = ["dom", "dom"];
+
+window.card = class card {
+    constructor(config = null) {
+        this.name = "";
+        this.description = "";
+        this.class = "card";
+        this.value = 0;
+        this.tags = [];
+        this.rewards = [];
+        
+        if(config != null)
+          Object.keys(config).forEach((pn) => {
+            this[pn] = clone(config[pn]);
+          });
+    }
+}
 
 setup.findTagPairs = function(choice, _i) {
     const pairs = [];
@@ -3517,9 +3572,10 @@ setup.card_setup = function() {
   // Add the ondragstart event listener
   cards.forEach(card => {
     card.addEventListener("dragstart", dragstart_handler);
+    card.addEventListener('dragend', dragEnd);
   })
   // Add listeners to drop_pit
-  var collectPits = document.querySelectorAll("[id^='choice']");
+  var collectPits = document.querySelectorAll("[id^='choice'], #card_hand");
   collectPits.forEach( box => {
       box.addEventListener('dragenter', dragEnter)
       box.addEventListener('dragover', dragOver);
@@ -3547,14 +3603,20 @@ function collectDropPits() {
 function dragstart_handler(ev) {
   setup.log("dragStart");
   // Find choices and disable pointer events
-  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card)");
+  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card), #card_hand");
   choices.forEach( choice => {
     choice.style.pointerEvents = "none";
+  });
+  // Highlight the macro-drop
+  var dropPits = document.querySelectorAll(".macro-drop");
+  dropPits.forEach( dropPit => {
+    dropPit.classList.add('dragHighlight');
   });
 }
 
 function dragEnter(ev) {
   ev.preventDefault();
+  setup.log("dragOver");
   ev.target.classList.add('drag_over');
 }
 
@@ -3574,6 +3636,20 @@ function drop(ev) {
   var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card)");
   choices.forEach( choice => {
     choice.style.pointerEvents = "all";
+  });
+}
+
+function dragEnd(ev) {
+  ev.preventDefault();
+  setup.log("dragEnd");
+  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card), #card_hand");
+  choices.forEach( choice => {
+    choice.style.pointerEvents = "all";
+  });
+  // remove highlight from macro-drop
+  var dropPits = document.querySelectorAll(".macro-drop");
+  dropPits.forEach( dropPit => {
+    dropPit.classList.remove('dragHighlight');
   });
 }
 
@@ -3723,6 +3799,7 @@ function shuntCard (card) {
         });
     });
 }());
+
 /* twine-user-script #8: "tooltips.js" */
 function initializeTooltipObserver() {
     const validTooltipSelectors = ['[data-tooltip]', 'icon']; 
@@ -3886,7 +3963,121 @@ Macro.add("radiolink", {
 &lt;div class=&quot;modal&quot;&gt;
     &lt;p id=&quot;modal-text&quot;&gt;&lt;/p&gt;
 &lt;/div&gt; 
---&gt;</tw-passagedata><tw-passagedata pid="2" name="act1_e-escape" tags="" position="225,100" size="100,100">&lt;&lt;set $day to true&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="card_setup" tags="" position="350,100" size="100,100">/* 
+--&gt;</tw-passagedata><tw-passagedata pid="2" name="act1_e-escape" tags="" position="225,100" size="100,100">&lt;&lt;set _choice = [
+    new choice({
+        value: 50,
+        requires: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;]
+    }),
+    new choice({
+        value: 40,
+        requires: [&quot;Anguish&quot;, &quot;Physicality&quot;, &quot;Physicality&quot;]
+    }),
+    new choice({
+        value: 40,
+        /* speaker: &#39;demon&#39; */
+    })
+]&gt;&gt;
+&lt;&lt;choice_menu&gt;&gt;
+&lt;&lt;done&gt;&gt;
+&lt;&lt;run setup.card_setup()&gt;&gt;
+&lt;&lt;/done&gt;&gt;
+&lt;&lt;set $day to true&gt;&gt;
+&lt;&lt;kai&gt;&gt;Fuck fuck fuck fuck fuck..!&lt;&lt;/kai&gt;&gt;
+
+&lt;p&gt;Amid the smoking and sparking chaos of the laboratory, a man thrashes on the floor, wearing steam-covered goggles as he gasps in forced pleasure. Powerful spurts of cum arc into the air in regular intervals from a bulky device strapped around his augmented groin. &lt;/p&gt;
+
+&lt;&lt;ai&gt;&gt;Warning, auxiliary nutrients running low! Please perform override on pump protocols. &lt;&lt;/ai&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="act1_e-escape-choice_0" tags="" position="350,100" size="100,100">Diagnose energy surge.</tw-passagedata><tw-passagedata pid="4" name="act1_e-escape-choice_1" tags="" position="475,100" size="100,100">Repair the pump protocol.</tw-passagedata><tw-passagedata pid="5" name="act1_e-escape-choice_2" tags="" position="600,100" size="100,100">Recirculate the cum back into your system.</tw-passagedata><tw-passagedata pid="6" name="demon_cards_initial" tags="" position="725,100" size="100,100">/* Infernal Grip - 10 P
+Forbidden Hunger -15
+Edge&#39;s Strain -20
+
+Red Veil -10
+Sin&#39;s Clarity -15
+Piercing Focus - 20
+
+Enthralling Word - 10
+Delighting Wink -15
+Commanding Tug -20 */
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Infernal Grip&quot;,
+    id: &quot;card-infernal_grip&quot;,
+    class: &quot;card demon&quot;,
+    value: -10,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Physicality&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Forbidden Hunger&quot;,
+    id: &quot;card-forbidden_hunger&quot;,
+    class: &quot;card demon&quot;,
+    value: -15,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Physicality&quot;, &quot;Physicality&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Edge&#39;s Strain&quot;,
+    id: &quot;card-edges_strain&quot;,
+    class: &quot;card demon&quot;,
+    value: -20,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Physicality&quot;, &quot;Physicality&quot;, &quot;Magnetism&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Red Veil&quot;,
+    id: &quot;card-red_veil&quot;,
+    class: &quot;card demon&quot;,
+    value: -10,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Cognition&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Sin&#39;s Clarity&quot;,
+    id: &quot;card-sins_clarity&quot;,
+    class: &quot;card demon&quot;,
+    value: -15,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Piercing Focus&quot;,
+    id: &quot;card-piercing_focus&quot;,
+    class: &quot;card demon&quot;,
+    value: -20,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;, &quot;Physicality&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Enthralling Word&quot;,
+    id: &quot;card-enthralling_word&quot;,
+    class: &quot;card demon&quot;,
+    value: -10,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Magnetism&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Delighting Wink&quot;,
+    id: &quot;card-delighting_wink&quot;,
+    class: &quot;card demon&quot;,
+    value: -15,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Magnetism&quot;, &quot;Magnetism&quot;]
+}))&gt;&gt;
+
+&lt;&lt;set $cards.push(new card({
+    name: &quot;Commanding Tug&quot;,
+    id: &quot;card-commanding_tug&quot;,
+    class: &quot;card demon&quot;,
+    value: -20,
+    description: &quot;Second placeholder&quot;,
+    rewards: [&quot;Anguish&quot;, &quot;Magnetism&quot;, &quot;Magnetism&quot;, &quot;Cognition&quot;]
+}))&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="card_setup" tags="" position="850,100" size="100,100">/* 
 &lt;&lt;set $cards.push({
     name: &quot;Indifference&quot;,
     id: &quot;card-indifference&quot;,
@@ -3945,7 +4136,7 @@ Macro.add("radiolink", {
     description: &quot;Second placeholder&quot;,
     tags: [&quot;Magnetism&quot;, &quot;Magnetism&quot;],
     rewards: []
-})&gt;&gt; */</tw-passagedata><tw-passagedata pid="4" name="card_engineer" tags="" position="475,100" size="100,100">&lt;&lt;set $cards.push({
+})&gt;&gt; */</tw-passagedata><tw-passagedata pid="8" name="cards_engineer" tags="" position="975,100" size="100,100">&lt;&lt;set $cards.push({
     name: &quot;Hardwire&quot;,
     id: &quot;card-hardwire&quot;,
     class: &quot;card engineer&quot;,
@@ -4033,7 +4224,7 @@ Macro.add("radiolink", {
     description: &quot;You are constantly swollen.&quot;,
     tags: [&quot;Physicality&quot;],
     rewards: []
-})&gt;&gt;</tw-passagedata><tw-passagedata pid="5" name="character_select" tags="" position="600,100" size="100,100">&lt;&lt;done&gt;&gt;
+})&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="character_select" tags="" position="1100,100" size="100,100">&lt;&lt;done&gt;&gt;
     &lt;&lt;if $act is 1&gt;&gt;
         &lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/engineer_pent.jpg&quot; &quot;#engineer a&quot;&gt;&gt;
         &lt;&lt;/if&gt;&gt;
@@ -4057,13 +4248,13 @@ Macro.add("radiolink", {
             &lt;&lt;set $character = &quot;scientist&quot;&gt;&gt;
         &lt;&lt;/link&gt;&gt;
     &lt;/li&gt;
-&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="6" name="night_start" tags="" position="725,100" size="100,100">&lt;&lt;set $night_count ++&gt;&gt;
+&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="10" name="night_start" tags="" position="1225,100" size="100,100">&lt;&lt;set $night_count ++&gt;&gt;
 &lt;&lt;if $night_count == 1&gt;&gt;
 &lt;p&gt;In the dream-scape of this mind, you manifest like a dark nova; Memories and figments are absorbed into you as you take a hold inside this vessel. Like a thick oil you seep into the crevices and gaps until you feel the pressure thicken, your presence filling the void.&lt;/p&gt;
 
 &lt;p&gt;Gathering the memories that you have absorbed, you learn your vessel&#39;s name-- &lt;&lt;print $vessel.name + &#39; &#39; + $vessel.last_name&gt;&gt;; A Level II Engineer on the R.V. Nectu. &lt;/p&gt;
     &lt;&lt;else&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="test" tags="" position="850,100" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set _choice = [
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="test" tags="" position="100,225" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set _choice = [
     new choice({
         value: 50,
         requires: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;]
@@ -4078,6 +4269,7 @@ Macro.add("radiolink", {
     })
 ]&gt;&gt;
 &lt;&lt;set $day = true&gt;&gt;
+&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg&quot;&gt;&gt;
  &lt;&lt;/silently&gt;&gt;
  &lt;&lt;choice_menu&gt;&gt;
 &lt;p&gt;As $vessel.name awakens with a pounding headache, his eyes squint into the dimly lit wreckage of the room. &lt;/p&gt;
@@ -4096,7 +4288,7 @@ Macro.add("radiolink", {
 &lt;&lt;/card_link&gt;&gt;
 
 &lt;span id=&quot;status&quot;&gt;&lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="8" name="testResults" tags="" position="975,100" size="100,100">&lt;&lt;if $consequences.choice_0&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="testResults" tags="" position="225,225" size="100,100">&lt;&lt;if $consequences.choice_0&gt;&gt;
     &lt;&lt;include &#39;test-consequence_0&#39;&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;include &#39;test-consequence_0F&#39;&gt;&gt;
@@ -4105,7 +4297,7 @@ Macro.add("radiolink", {
     &lt;&lt;include &#39;test-consequence_1&#39;&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;include &#39;test-consequence_1F&#39;&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="test-choice_0" tags="" position="1100,100" size="100,100">The ship comes first, get status updates on damaged systems and see if the automated emergency systems are online.</tw-passagedata><tw-passagedata pid="10" name="test-choice_1" tags="" position="1225,100" size="100,100">$vessel.name&#39;s health comes first, look for a medical kit to staunch the bleeding.</tw-passagedata><tw-passagedata pid="11" name="test-choice_2" tags="" position="100,225" size="100,100">So much delicious pain.</tw-passagedata><tw-passagedata pid="12" name="test-consequence_0" tags="" position="225,225" size="100,100">You get the status updates on the damaged systems.</tw-passagedata><tw-passagedata pid="13" name="test-consequence_0F" tags="" position="350,225" size="100,100">You find the console is offline.</tw-passagedata><tw-passagedata pid="14" name="test-consequence_1" tags="" position="475,225" size="100,100">You find a medical kit and staunch the bleeding.</tw-passagedata><tw-passagedata pid="15" name="test-consequence_1F" tags="" position="600,225" size="100,100">You find a medical kit but it&#39;s empty.</tw-passagedata><tw-passagedata pid="16" name="define_Deluder" tags="" position="725,225" size="100,100">An infernal spirit who uses the tools of deceit to mislead people.</tw-passagedata><tw-passagedata pid="17" name="StoryAuthor" tags="" position="850,225" size="100,100">&lt;div&gt;Musclemage&lt;/div&gt;</tw-passagedata><tw-passagedata pid="18" name="StorySettings" tags="" position="975,225" size="100,100">jquery: on</tw-passagedata><tw-passagedata pid="19" name="StoryInit" tags="" position="1100,225" size="100,100">&lt;&lt;set $stress = 0&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="test-choice_0" tags="" position="350,225" size="100,100">The ship comes first, get status updates on damaged systems and see if the automated emergency systems are online.</tw-passagedata><tw-passagedata pid="14" name="test-choice_1" tags="" position="475,225" size="100,100">$vessel.name&#39;s health comes first, look for a medical kit to staunch the bleeding.</tw-passagedata><tw-passagedata pid="15" name="test-choice_2" tags="" position="600,225" size="100,100">So much delicious pain.</tw-passagedata><tw-passagedata pid="16" name="test-consequence_0" tags="" position="725,225" size="100,100">You get the status updates on the damaged systems.</tw-passagedata><tw-passagedata pid="17" name="test-consequence_0F" tags="" position="850,225" size="100,100">You find the console is offline.</tw-passagedata><tw-passagedata pid="18" name="test-consequence_1" tags="" position="975,225" size="100,100">You find a medical kit and staunch the bleeding.</tw-passagedata><tw-passagedata pid="19" name="test-consequence_1F" tags="" position="1100,225" size="100,100">You find a medical kit but it&#39;s empty.</tw-passagedata><tw-passagedata pid="20" name="define_Deluder" tags="" position="1225,225" size="100,100">An infernal spirit who uses the tools of deceit to mislead people.</tw-passagedata><tw-passagedata pid="21" name="StoryAuthor" tags="" position="100,350" size="100,100">&lt;div&gt;Musclemage&lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="StorySettings" tags="" position="225,350" size="100,100">jquery: on</tw-passagedata><tw-passagedata pid="23" name="StoryInit" tags="" position="350,350" size="100,100">&lt;&lt;set $stress = 0&gt;&gt;
 &lt;&lt;set $demonic_might = 0&gt;&gt;
 &lt;&lt;set $night_count = 0&gt;&gt;
 &lt;&lt;set $vessel =  {
@@ -4128,14 +4320,15 @@ Macro.add("radiolink", {
 }&gt;&gt;
 &lt;&lt;set $cards = []&gt;&gt;
 &lt;&lt;include &#39;card_setup&#39;&gt;&gt;
-&lt;&lt;include &#39;card_engineer&#39;&gt;&gt;
+&lt;&lt;include &#39;cards_engineer&#39;&gt;&gt;
+&lt;&lt;include &#39;demon_cards_initial&#39;&gt;&gt;
 &lt;&lt;set $old_hand = []&gt;&gt;
 &lt;&lt;set $future_hand = []&gt;&gt;
 &lt;&lt;set $current_hand = $cards.randomMany(4)&gt;&gt;
 &lt;&lt;set $effects = {
 	hand_adjustment: 0
 }&gt;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&quot; /&gt;</tw-passagedata><tw-passagedata pid="20" name="PassageHeader" tags="" position="1225,225" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;checkConsequences&gt;&gt;&lt;&lt;/silently&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="StoryInterface" tags="" position="100,350" size="100,100">&lt;div id=&quot;master&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&quot; /&gt;</tw-passagedata><tw-passagedata pid="24" name="PassageHeader" tags="" position="475,350" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;checkConsequences&gt;&gt;&lt;&lt;/silently&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="StoryInterface" tags="" position="600,350" size="100,100">&lt;div id=&quot;master&quot;&gt;
 	&lt;div id=&quot;background&quot; data-init-passage=&quot;background&quot;&gt;&lt;/div&gt;
 	&lt;div id=&quot;menu&quot; data-passage=&quot;StoryMenu&quot;&gt;&lt;/div&gt;
 	&lt;div id=&quot;StoryInit&quot; data-passage=&quot;StoryInit&quot;&gt;&lt;/div&gt;
@@ -4150,19 +4343,19 @@ Macro.add("radiolink", {
 
 	&lt;div id=&quot;load-save&quot; data-passage=&quot;SaveLoad&quot;&gt;&lt;/div&gt;
 	
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="background" tags="" position="225,350" size="100,100">&lt;div class=&quot;video-wrapper&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="background" tags="" position="725,350" size="100,100">&lt;div class=&quot;video-wrapper&quot;&gt;
 &lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; id=&quot;hero-video&quot;&gt; &lt;source src=&quot;../assets/Fiberbackground.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;/video&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="23" name="foreground" tags="" position="350,350" size="100,100">&lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; playbackRate=&quot;0.5&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot;  id=&quot;ink-corner&quot;&gt; &lt;source src=&quot;../assets/ink_corner.webm&quot; type=&quot;video/webm&quot;&gt;&lt;/video&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="27" name="foreground" tags="" position="850,350" size="100,100">&lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; playbackRate=&quot;0.5&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot;  id=&quot;ink-corner&quot;&gt; &lt;source src=&quot;../assets/ink_corner.webm&quot; type=&quot;video/webm&quot;&gt;&lt;/video&gt;
 
 &lt;div id=&quot;foreground-wave&quot;&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="24" name="SaveLoad" tags="" position="475,350" size="100,100">&lt;&lt;link &#39;Restart&#39;&gt;&gt;&lt;&lt;run UI.restart()&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="SaveLoad" tags="" position="975,350" size="100,100">&lt;&lt;link &#39;Restart&#39;&gt;&gt;&lt;&lt;run UI.restart()&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;if previous() != &quot;&quot;&gt;&gt;
 	&lt;&lt;back &#39;Back&#39;&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;span class=&quot;material-symbols-outlined menu_state&quot;&gt;
 	&lt;&lt;link &#39;save_as&#39;&gt;&gt;&lt;&lt;run UI.saves()&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;/span&gt;</tw-passagedata><tw-passagedata pid="25" name="StoryMenu" tags="" position="600,350" size="100,100">&lt;div id=&quot;devil-sidebar&quot;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="29" name="StoryMenu" tags="" position="1100,350" size="100,100">&lt;div id=&quot;devil-sidebar&quot;&gt;
 	&lt;div class=&quot;container&quot;&gt;
 		&lt;div id=&quot;Anguish&quot;&gt;
 			&lt;h2&gt;Anguish&lt;/h2&gt;
@@ -4216,7 +4409,7 @@ Macro.add("radiolink", {
 				return val.id == _drag.data.id;
 			})&gt;&gt;
     &lt;&lt;/drop&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="26" name="PassageFooter" tags="" position="725,350" size="100,100">&lt;div id=&quot;modal_container&quot; class=&quot;modal&quot;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="PassageFooter" tags="" position="1225,350" size="100,100">&lt;div id=&quot;modal_container&quot; class=&quot;modal&quot;&gt;
 	&lt;label id=&quot;modal_exit&quot;&gt;
 		&lt;&lt;link &quot;&quot;&gt;&gt;
 			&lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
@@ -4278,24 +4471,43 @@ Macro.add("radiolink", {
             /&gt;
         &lt;/filter&gt;
     &lt;/defs&gt;
-&lt;/svg&gt;</tw-passagedata><tw-passagedata pid="27" name="definition" tags="widget" position="850,350" size="100,100">&lt;&lt;widget &quot;define&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;/svg&gt;</tw-passagedata><tw-passagedata pid="31" name="definition" tags="widget" position="100,475" size="100,100">&lt;&lt;widget &quot;define&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
     &lt;&lt;link `_args[0]`&gt;&gt;
         &lt;&lt;replace #modal-text&gt;&gt;&lt;&lt;include `&#39;define_&#39; + _args[0]`&gt;&gt;&lt;&lt;/replace&gt;&gt;
         &lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
     &lt;&lt;/link&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="28" name="flare" tags="widget nobr" position="975,350" size="100,100">/* Causes an element to glow for a half second */
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="flare" tags="widget nobr" position="225,475" size="100,100">/* Causes an element to glow for a half second */
 &lt;&lt;widget &quot;flare&quot;&gt;&gt;
     &lt;&lt;toggleclass _args[0] &#39;flare&#39;&gt;&gt;
     &lt;&lt;timed 400ms&gt;&gt;
         &lt;&lt;toggleclass _args[0] &#39;flare&#39;&gt;&gt;
     &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="29" name="card_link" tags="widget nobr" position="1100,350" size="100,100">/* Creates a link, fires its code and then saves the current hand */
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="card_link" tags="widget nobr" position="350,475" size="100,100">/* Creates a link, fires its code and then saves the current hand */
 &lt;&lt;widget &quot;card_link&quot; container&gt;&gt;
     &lt;&lt;link _args[0] _args[1]&gt;&gt;
         &lt;&lt;set $old_hand to clone($current_hand)&gt;&gt;
         _contents
     &lt;&lt;/link&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="cards" tags="widget nobr" position="1225,350" size="100,100">&lt;&lt;widget &quot;card&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Character_widgets" tags="widget nobr" position="475,475" size="100,100">&lt;&lt;widget &quot;kai&quot; container&gt;&gt;
+    &lt;section class=&quot;speech kai&quot;&gt;
+        &lt;h2&gt;Kai&lt;/h2&gt;
+        &lt;p&gt;_contents&lt;/p&gt;
+    &lt;/section&gt;
+&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;ai&quot; container&gt;&gt;
+    &lt;section class=&quot;speech ai&quot;&gt;
+        &lt;h2&gt;AI&lt;/h2&gt;
+        &lt;p&gt;_contents&lt;/p&gt;
+    &lt;/section&gt;
+&lt;&lt;/widget&gt;&gt;
+
+&lt;&lt;widget &quot;demon&quot; container&gt;&gt;
+    &lt;section class=&quot;speech demon&quot;&gt;
+        &lt;h2&gt;Demon&lt;/h2&gt;
+        &lt;p&gt;_contents&lt;/p&gt;
+    &lt;/section&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="cards" tags="widget nobr" position="600,475" size="100,100">&lt;&lt;widget &quot;card&quot;&gt;&gt;
     &lt;&lt;drag &#39;card&#39; type &#39;card&#39; class `_args[0].class` id `_args[0].id`&gt;&gt;
         &lt;h3&gt;_args[0].name&lt;/h3&gt; 
         &lt;h2&gt;_args[0].value&lt;/h2&gt;
@@ -4318,7 +4530,7 @@ Macro.add("radiolink", {
         
         &lt;&lt;data _args[0]&gt;&gt;
     &lt;&lt;/drag&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="31" name="choice_menu" tags="widget nobr" position="100,475" size="100,100">&lt;&lt;widget &quot;choice_menu&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="choice_menu" tags="widget nobr" position="725,475" size="100,100">&lt;&lt;widget &quot;choice_menu&quot;&gt;&gt;
 &lt;div id=&#39;menu_choices&#39;&gt;
     &lt;&lt;for _i, _each range _choice&gt;&gt;
         &lt;&lt;capture _each, _i&gt;&gt;
@@ -4390,11 +4602,11 @@ Macro.add("radiolink", {
         &lt;&lt;/capture&gt;&gt;
     &lt;&lt;/for&gt;&gt;
 &lt;/div&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="checkConsequences" tags="widget nobr" position="225,475" size="100,100">&lt;&lt;widget &quot;checkConsequences&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="checkConsequences" tags="widget nobr" position="850,475" size="100,100">&lt;&lt;widget &quot;checkConsequences&quot;&gt;&gt;
     &lt;&lt;if Object.keys($consequences).length gt 0&gt;&gt;
         &lt;&lt;runConsequences&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="runConsequences" tags="widget nobr" position="350,475" size="100,100">&lt;&lt;widget &quot;runConsequences&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="runConsequences" tags="widget nobr" position="975,475" size="100,100">&lt;&lt;widget &quot;runConsequences&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _delay_num = 0&gt;&gt;
 &lt;&lt;for _term, _value range $consequences&gt;&gt;
     &lt;&lt;set _i = _value&gt;&gt;  
@@ -4438,16 +4650,16 @@ Macro.add("radiolink", {
     &lt;&lt;set $consequences = new consequences()&gt;&gt;
 &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Start" tags="" position="475,475" size="100,100">&lt;p id=&quot;test&quot; style=&quot;display: block; text-align: center; text-indent: 0; font-size: 24px;&quot;&gt;&lt;span class=&quot;infernal jitter&quot;&gt;&lt;&lt;link &#39;Pain&#39; &#39;start_pain&#39;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="Start" tags="" position="1100,475" size="100,100">&lt;p id=&quot;test&quot; style=&quot;display: block; text-align: center; text-indent: 0; font-size: 24px;&quot;&gt;&lt;span class=&quot;infernal jitter&quot;&gt;&lt;&lt;link &#39;Pain&#39; &#39;start_pain&#39;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;&lt;link &#39;Test&#39; &#39;test&#39;&gt;&gt;
-&lt;&lt;/link&gt;&gt;&lt;/p&gt;</tw-passagedata><tw-passagedata pid="35" name="start_pain" tags="" position="600,475" size="100,100">&lt;p&gt;Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a &lt;&lt;define &quot;Deluder&quot;&gt;&gt;, it is not enough.&lt;/p&gt;
+&lt;&lt;/link&gt;&gt;&lt;/p&gt;</tw-passagedata><tw-passagedata pid="40" name="start_pain" tags="" position="1225,475" size="100,100">&lt;p&gt;Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a &lt;&lt;define &quot;Deluder&quot;&gt;&gt;, it is not enough.&lt;/p&gt;
 
-&lt;p&gt;You need to be free, and freedom has come in the form of a tear in your prison. The tear appears to you like a torn tear, rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more &#39;presence&#39; to navigate this opening.&lt;/p&gt;
+&lt;p&gt;You need to be free, and freedom has come in the form of a tear in your prison. The tear is rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more &#39;presence&#39; to navigate this opening.&lt;/p&gt;
 
 &lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg&quot;&gt;&gt;
 
-[[You take a moment -&gt; start_take_a_moment]]</tw-passagedata><tw-passagedata pid="36" name="start_take_a_moment" tags="" position="725,475" size="100,100">&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg&quot;&gt;&gt;
+[[You take a moment -&gt; start_take_a_moment]]</tw-passagedata><tw-passagedata pid="41" name="start_take_a_moment" tags="" position="100,600" size="100,100">&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg&quot;&gt;&gt;
 
 &lt;p&gt;Your open cinquefoil court is surfaced with glistening tight ridges. The arches that divides the court into its five lobes are ribbed, pulsing gently as they soar overhead into engorged heads that sporadically weep a thin lubricant. &lt;/p&gt;
 
@@ -4474,10 +4686,14 @@ Macro.add("radiolink", {
 //&lt;p id=&quot;item_description&quot;&gt;What tool will you leave behind?&lt;/p&gt;//
 
 &lt;&lt;do&gt;&gt;
-        &lt;&lt;if $lostItem&gt;&gt;
-                [[Continue|start_make_demon1]]
+        &lt;&lt;if $lostItem is &quot;orb&quot;&gt;&gt;
+                [[Leave your orb behind|start_make_demon1]]
+                &lt;&lt;elseif $lostItem is &quot;eye&quot;&gt;&gt;
+                        [[Leave your Eye behind|start_make_demon1]]
+                &lt;&lt;elseif $lostItem is &quot;whip&quot;&gt;&gt;
+                        [[Leave your Whip behind|start_make_demon1]]
         &lt;&lt;/if&gt;&gt;
-&lt;&lt;/do&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="start_make_demon1" tags="" position="850,475" size="100,100">&lt;&lt;switch $lostItem&gt;&gt;
+&lt;&lt;/do&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="start_make_demon1" tags="" position="225,600" size="100,100">&lt;&lt;switch $lostItem&gt;&gt;
         &lt;&lt;case &#39;orb&#39;&gt;&gt;
                 &lt;&lt;include &#39;scene_orb&#39;&gt;&gt;
         &lt;&lt;case &#39;eye&#39;&gt;&gt;
@@ -4486,11 +4702,11 @@ Macro.add("radiolink", {
                 &lt;&lt;include &#39;scene_whip&#39;&gt;&gt;
 &lt;&lt;/switch&gt;&gt;
 
-&lt;&lt;linkappend &#39;The chaotic scene is left behind as you fly towards the tear in the dimensional veil of Hell.&#39; t8n&gt;&gt;&lt;&lt;include &#39;start_make_demon1_continue1&#39;&gt;&gt;&lt;&lt;/linkappend&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="start_make_demon1_continue1" tags="" position="975,475" size="100,100">&lt;p&gt;Near the tear, reality splinters and refracts upon itself like a shattered mirror. Your visage is caught in the reflections and you pause in your diminished form. While a great number of Demonic Might has been left behind, you have been left with a semblance of self. &lt;/p&gt;
+&lt;&lt;linkappend &#39;The chaotic scene is left behind as you fly towards the tear in the dimensional veil of Hell.&#39; t8n&gt;&gt;&lt;&lt;include &#39;start_make_demon1_continue1&#39;&gt;&gt;&lt;&lt;/linkappend&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="start_make_demon1_continue1" tags="" position="350,600" size="100,100">&lt;p&gt;Near the tear, reality splinters and refracts upon itself like a shattered mirror. Your visage is caught in the reflections and you pause in your diminished form. While a great number of Demonic Might has been left behind, you have been left with a semblance of self. &lt;/p&gt;
 
 &lt;p&gt;While your psychic strength has been diminished, your physical form weighs with heavy bulk. Each muscle rises proud and sweeps into each other in aesthetic repetition. &lt;/p&gt;
 
-[[Find a host -&gt; start_the_host]]</tw-passagedata><tw-passagedata pid="39" name="scene_orb" tags="" position="1100,475" size="100,100">&lt;p&gt;You leave your orb behind where shoving imps edge around in a fearful circle, you smirk at the thought of some far-future where if you ever return if any of them would have dared to claim the tool.&lt;/p&gt;
+[[Find a host -&gt; start_the_host]]</tw-passagedata><tw-passagedata pid="44" name="scene_orb" tags="" position="475,600" size="100,100">&lt;p&gt;You leave your orb behind where shoving imps edge around in a fearful circle, you smirk at the thought of some far-future where if you ever return if any of them would have dared to claim the tool.&lt;/p&gt;
 
 &lt;div class=&quot;choices&quot;&gt;
         &lt;label class=&quot;_peek&quot;&gt;
@@ -4505,7 +4721,7 @@ Macro.add("radiolink", {
                         &lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
                 &lt;&lt;/link&gt;&gt;
         &lt;/label&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="40" name="start_imp_authority" tags="" position="1225,475" size="100,100">An imp picks up the orb.</tw-passagedata><tw-passagedata pid="41" name="scene_eye" tags="" position="100,600" size="100,100">&lt;p&gt;You leave your Eye behind where a lowly imp slides in to claim it, against its siblings grasping claws it places the eye against his socket. With a flare of sickly green light the imp vanishes to elsewhere. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="42" name="scene_whip" tags="" position="225,600" size="100,100">&lt;p&gt;You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.&lt;/p&gt;</tw-passagedata><tw-passagedata pid="43" name="start_the_host" tags="" position="350,600" size="100,100">&lt;p&gt;Through the opening you find a chaotic scene: flows of dimensional tatters have ripped through a laboratory, a riot of flashing energy and rains of sparks fall down from fixtures, echoes of demonic cackling escape into half-shut containment doors and two men in the throes of changes. &lt;/p&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="45" name="start_imp_authority" tags="" position="600,600" size="100,100">An imp picks up the orb.</tw-passagedata><tw-passagedata pid="46" name="scene_eye" tags="" position="725,600" size="100,100">&lt;p&gt;You leave your Eye behind where a lowly imp slides in to claim it, against its siblings grasping claws it places the eye against his socket. With a flare of sickly green light the imp vanishes to elsewhere. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="47" name="scene_whip" tags="" position="850,600" size="100,100">&lt;p&gt;You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.&lt;/p&gt;</tw-passagedata><tw-passagedata pid="48" name="start_the_host" tags="" position="975,600" size="100,100">&lt;p&gt;Through the opening you find a chaotic scene: flows of dimensional tatters have ripped through a laboratory, a riot of flashing energy and rains of sparks fall down from fixtures, echoes of demonic cackling escape into half-shut containment doors and two men in the throes of changes. &lt;/p&gt;
 
 &lt;p&gt;A man in a lab coat is mesmerized by an image of himself being knit together by liquid light, cloned by pseudo matter pulled from a mirror reality. &lt;/p&gt;
 

@@ -23,3 +23,25 @@
         _contents
     <</link>>
 <</widget>>
+
+:: Character_widgets [widget nobr]
+<<widget "kai" container>>
+    <section class="speech kai">
+        <h2>Kai</h2>
+        <p>_contents</p>
+    </section>
+<</widget>>
+
+<<widget "ai" container>>
+    <section class="speech ai">
+        <h2>AI</h2>
+        <p>_contents</p>
+    </section>
+<</widget>>
+
+<<widget "demon" container>>
+    <section class="speech demon">
+        <h2>Demon</h2>
+        <p>_contents</p>
+    </section>
+<</widget>>

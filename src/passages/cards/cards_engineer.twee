@@ -60,7 +60,7 @@
     rewards: []
 })>> */
 
-:: card_engineer
+:: cards_engineer
 
 <<set $cards.push({
     name: "Hardwire",
