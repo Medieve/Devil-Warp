@@ -11,15 +11,11 @@
   float: right;
   margin-left: 2em;
   width: 50%;
-  gap: 2em 1em;
+  gap: 1em;
 }
 
 #ui-bar.stowed ~ #story .card_hand {
   left: calc(2em + 50%);
-}
-
-.drag_over {
-  background: red;
 }
 
 #card_hand {
@@ -79,6 +75,13 @@ card.demon {
   border-color: var(--dem-main);
   -webkit-filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
           filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+}
+card.boss {
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--boss-main-dark)), to(transparent));
+  background: linear-gradient(0deg, var(--boss-main-dark), transparent);
+  border-color: var(--boss-main);
+  -webkit-filter: drop-shadow(2px 4px 10px var(--boss-main-dark));
+          filter: drop-shadow(2px 4px 10px var(--boss-main-dark));
 }
 card h2 {
   -ms-grid-row: 3;
@@ -373,4 +376,123 @@ icon.on::before {
 
 .initial {
   border-color: green;
+}
+
+#menu_choices [id^=choice] {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "description description description description description description" "current card1 card2 card3 value rewards";
+  -ms-grid-columns: auto auto auto auto auto 1fr;
+  grid-template-columns: auto auto auto auto auto 1fr;
+  place-content: center;
+  border: 2px solid white;
+  padding: 1em 2em;
+}
+#menu_choices [id^=choice] .choice_text {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 6;
+  grid-area: description;
+  text-align: center;
+}
+#menu_choices [id^=choice] .requirements, #menu_choices [id^=choice] .rewards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  text-align: center;
+}
+#menu_choices [id^=choice] .rewards {
+  -ms-grid-row: 2;
+  -ms-grid-column: 6;
+  grid-area: rewards;
+}
+#menu_choices [id^=choice] h2 {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid var(--ui-medium);
+  border-radius: 50%;
+  background: var(--ui-dark);
+  text-align: center;
+}
+#menu_choices [id^=choice] h2.value {
+  -ms-grid-row: 2;
+  -ms-grid-column: 5;
+  grid-area: value;
+}
+#menu_choices [id^=choice] h2.current {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: current;
+  position: relative;
+  background: none;
+  border: none;
+}
+#menu_choices [id^=choice] h2.current::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--col-black);
+  border: 2px solid var(--ui-medium);
+  border-radius: 0;
+  rotate: 45deg;
+  z-index: -1;
+}
+#menu_choices [id^=choice] p {
+  margin: 0;
+}
+#menu_choices [id^=choice].success h2.current {
+  color: var(--ui-dark);
+}
+#menu_choices [id^=choice].success h2.current::before {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent-light);
+}
+
+#menu_choices [id^=choice_].vessel {
+  background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
+  color: var(--mc-main-light);
+  border: 2px solid var(--mc-main);
+  border-radius: 1em;
+}
+#menu_choices [id^=choice_].vessel h2.value {
+  border-color: var(--mc-main);
+}
+#menu_choices [id^=choice_].boss {
+  background: radial-gradient(ellipse at top center, transparent, var(--boss-main-dark));
+  color: var(--boss-main-light);
+  border: 2px solid var(--boss-main);
+  border-radius: 1em;
+}
+#menu_choices [id^=choice_].boss h2.value {
+  border-color: var(--boss-main);
+}
+#menu_choices [id^=choice_].demon {
+  color: var(--dem-main-light);
+  border: unset;
+}
+#menu_choices [id^=choice_].demon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
+  border: 2px solid var(--dem-main);
+  border-radius: 1em;
+  z-index: 0;
+  -webkit-filter: url(#squiggle);
+          filter: url(#squiggle);
+}
+#menu_choices [id^=choice_].demon h2.value {
+  border-color: var(--dem-main);
 }

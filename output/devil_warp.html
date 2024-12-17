@@ -104,7 +104,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
 		<div id="init-lacking"><p>Browser lacks capabilities required to play.</p><p>Upgrade or switch to another browser.</p></div>
 		<div id="init-loading"><div>Loading&hellip;</div></div>
 	</div>
-	<!-- UUID://8C9DACB5-ADBA-459B-81EF-71A7D96DAF43// --><tw-storydata name="Devil Warp" startnode="39" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="8C9DACB5-ADBA-459B-81EF-71A7D96DAF43" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "base.css" */
+	<!-- UUID://8C9DACB5-ADBA-459B-81EF-71A7D96DAF43// --><tw-storydata name="Devil Warp" startnode="50" creator="Tweego" creator-version="2.1.1+81d1d71" ifid="8C9DACB5-ADBA-459B-81EF-71A7D96DAF43" zoom="1" format="SugarCube" format-version="2.37.3" options="" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">/* twine-user-stylesheet #1: "base.css" */
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&family=Geo&family=Offside&family=Uncial+Antiqua&family=UnifrakturCook&display=swap");
 :root {
   --font-text: "Offside";
@@ -125,7 +125,7 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
   --col-tuscany-trans: hsla(355, 20%, 67%, 0.25);
   --ui-dark: #1f1219;
   --ui-medium: hsl(310, 36%, 32%);
-  --ui-light: #9e8792;
+  --ui-light: #b99dab;
   --ui-accent: #ffcc00;
   --ui-accent-dark: #411817;
   --ui-accent-light: #ffcc66;
@@ -140,12 +140,15 @@ var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZa
       linear-gradient(black 0%, black 100%);
   -webkit-box-shadow: 0 0 20px var(--col-deep), 0 0 12px var(--ui-medium), 0 0 2px var(--ui-medium);
           box-shadow: 0 0 20px var(--col-deep), 0 0 12px var(--ui-medium), 0 0 2px var(--ui-medium);
-  --mc-main: hsl(230, 40%, 44%);
-  --mc-main-dark: hsla(230, 70%, 20%, 0.6);
+  --mc-main: hsl(230, 50%, 44%);
+  --mc-main-dark: hsla(230, 84%, 20%, 0.6);
   --mc-main-light: hsl(230, 100%, 80%);
-  --dem-main: hsl(330, 70%, 44%);
+  --dem-main: hsl(330, 50%, 44%);
   --dem-main-dark: hsla(300, 84%, 14%, 0.6);
   --dem-main-light: hsl(0, 100%, 80%);
+  --boss-main: hsl(162, 50%, 44%);
+  --boss-main-dark: hsla(162, 84%, 14%, 0.6);
+  --boss-main-light: hsl(162, 100%, 80%);
   --math-bounce: cubic-bezier(.3,-1,.6,2);
   --math-overshoot: cubic-bezier(.4,0,.3,1.5);
   --img-anguish: url(https://medieve.github.io/Devil-Warp/assets/ico_anguish.svg);
@@ -285,14 +288,14 @@ div#master #menu {
   -ms-grid-row: 2;
   grid-row: 2;
   width: calc(140ch + var(--__padding) * 2);
-  margin-top: 15vh;
+  margin-top: 10vh;
   margin-left: 12vw;
   height: -webkit-max-content;
   height: -moz-max-content;
   height: max-content;
   bottom: 0;
   padding: var(--__padding);
-  padding-bottom: 20vh;
+  padding-bottom: 24vh;
 }
 #passages::before, #passages::after {
   content: "";
@@ -319,7 +322,7 @@ div#master #menu {
   z-index: -4;
 }
 #passages:not(:has(#menu_choices)) {
-  padding: 2em 5vw;
+  padding: 2em 5vw 24vh 5vw;
   width: calc(70ch + var(--__padding) * 2);
 }
 
@@ -493,15 +496,11 @@ input[type=radio]:checked, input[type=checkbox]:checked {
   float: right;
   margin-left: 2em;
   width: 50%;
-  gap: 2em 1em;
+  gap: 1em;
 }
 
 #ui-bar.stowed ~ #story .card_hand {
   left: calc(2em + 50%);
-}
-
-.drag_over {
-  background: red;
 }
 
 #card_hand {
@@ -561,6 +560,13 @@ card.demon {
   border-color: var(--dem-main);
   -webkit-filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
           filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+}
+card.boss {
+  background: -webkit-gradient(linear, left bottom, left top, from(var(--boss-main-dark)), to(transparent));
+  background: linear-gradient(0deg, var(--boss-main-dark), transparent);
+  border-color: var(--boss-main);
+  -webkit-filter: drop-shadow(2px 4px 10px var(--boss-main-dark));
+          filter: drop-shadow(2px 4px 10px var(--boss-main-dark));
 }
 card h2 {
   -ms-grid-row: 3;
@@ -856,6 +862,125 @@ icon.on::before {
 .initial {
   border-color: green;
 }
+
+#menu_choices [id^=choice] {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "description description description description description description" "current card1 card2 card3 value rewards";
+  -ms-grid-columns: auto auto auto auto auto 1fr;
+  grid-template-columns: auto auto auto auto auto 1fr;
+  place-content: center;
+  border: 2px solid white;
+  padding: 1em 2em;
+}
+#menu_choices [id^=choice] .choice_text {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 6;
+  grid-area: description;
+  text-align: center;
+}
+#menu_choices [id^=choice] .requirements, #menu_choices [id^=choice] .rewards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  text-align: center;
+}
+#menu_choices [id^=choice] .rewards {
+  -ms-grid-row: 2;
+  -ms-grid-column: 6;
+  grid-area: rewards;
+}
+#menu_choices [id^=choice] h2 {
+  display: -ms-grid;
+  display: grid;
+  place-content: center;
+  margin: 0;
+  width: 50px;
+  aspect-ratio: 1;
+  border: 2px solid var(--ui-medium);
+  border-radius: 50%;
+  background: var(--ui-dark);
+  text-align: center;
+}
+#menu_choices [id^=choice] h2.value {
+  -ms-grid-row: 2;
+  -ms-grid-column: 5;
+  grid-area: value;
+}
+#menu_choices [id^=choice] h2.current {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: current;
+  position: relative;
+  background: none;
+  border: none;
+}
+#menu_choices [id^=choice] h2.current::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--col-black);
+  border: 2px solid var(--ui-medium);
+  border-radius: 0;
+  rotate: 45deg;
+  z-index: -1;
+}
+#menu_choices [id^=choice] p {
+  margin: 0;
+}
+#menu_choices [id^=choice].success h2.current {
+  color: var(--ui-dark);
+}
+#menu_choices [id^=choice].success h2.current::before {
+  background: var(--ui-accent);
+  border-color: var(--ui-accent-light);
+}
+
+#menu_choices [id^=choice_].vessel {
+  background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
+  color: var(--mc-main-light);
+  border: 2px solid var(--mc-main);
+  border-radius: 1em;
+}
+#menu_choices [id^=choice_].vessel h2.value {
+  border-color: var(--mc-main);
+}
+#menu_choices [id^=choice_].boss {
+  background: radial-gradient(ellipse at top center, transparent, var(--boss-main-dark));
+  color: var(--boss-main-light);
+  border: 2px solid var(--boss-main);
+  border-radius: 1em;
+}
+#menu_choices [id^=choice_].boss h2.value {
+  border-color: var(--boss-main);
+}
+#menu_choices [id^=choice_].demon {
+  color: var(--dem-main-light);
+  border: unset;
+}
+#menu_choices [id^=choice_].demon::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
+  border: 2px solid var(--dem-main);
+  border-radius: 1em;
+  z-index: 0;
+  -webkit-filter: url(#squiggle);
+          filter: url(#squiggle);
+}
+#menu_choices [id^=choice_].demon h2.value {
+  border-color: var(--dem-main);
+}
 /* twine-user-stylesheet #3: "drag-drop-macro.css" */
 .macro-drop {
   border: .2em solid #444;
@@ -870,7 +995,11 @@ icon.on::before {
   user-select: none;}
 
 .dragHighlight, .drag-over {
-  border: var(--ui-light) 2px dashed !important;
+  border: var(--ui-accent) 2px dashed !important;
+}
+
+.drag_over {
+  background: red;
 }
 /* twine-user-stylesheet #4: "passage.css" */
 .margin {
@@ -987,115 +1116,6 @@ span.infernal::before {
     background-position: 100% 100%;
   }
 }
-#menu_choices [id^=choice] {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  position: relative;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: auto 0.5rem auto;
-      grid-template-areas: "description description description description description description" "current card1 card2 card3 value rewards";
-  -ms-grid-columns: auto 0 auto 0 auto 0 auto 0 auto 0 1fr;
-  grid-template-columns: auto auto auto auto auto 1fr;
-  gap: 0.5rem 0;
-  place-content: center;
-  border: 2px solid white;
-  padding: 1em 2em;
-}
-#menu_choices [id^=choice] .choice_text {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 11;
-  grid-area: description;
-  text-align: center;
-}
-#menu_choices [id^=choice] .requirements, #menu_choices [id^=choice] .rewards {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  text-align: center;
-}
-#menu_choices [id^=choice] .rewards {
-  -ms-grid-row: 3;
-  -ms-grid-column: 11;
-  grid-area: rewards;
-}
-#menu_choices [id^=choice] h2 {
-  display: -ms-grid;
-  display: grid;
-  place-content: center;
-  margin: 0;
-  width: 50px;
-  aspect-ratio: 1;
-  border: 2px solid var(--ui-medium);
-  border-radius: 50%;
-  background: var(--ui-dark);
-  text-align: center;
-  z-index: 1;
-}
-#menu_choices [id^=choice] h2.value {
-  -ms-grid-row: 3;
-  -ms-grid-column: 9;
-  grid-area: value;
-}
-#menu_choices [id^=choice] h2.current {
-  -ms-grid-row: 3;
-  -ms-grid-column: 1;
-  grid-area: current;
-  position: relative;
-  background: none;
-  border: none;
-}
-#menu_choices [id^=choice] h2.current::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--col-black);
-  border: 2px solid var(--ui-medium);
-  border-radius: 0;
-  rotate: 45deg;
-  z-index: -1;
-}
-#menu_choices [id^=choice] p {
-  margin: 0;
-}
-#menu_choices [id^=choice].success h2.current {
-  color: var(--ui-dark);
-}
-#menu_choices [id^=choice].success h2.current::before {
-  background: var(--ui-accent);
-  border-color: var(--ui-accent-light);
-}
-
-#menu_choices [id^=choice_].vessel {
-  background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
-  border: 2px solid var(--mc-main);
-  color: var(--mc-main-light);
-  border-radius: 1em;
-}
-
-#menu_choices [id^=choice_].demon {
-  position: relative;
-  color: var(--dem-main-light);
-  border: unset;
-}
-#menu_choices [id^=choice_].demon::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
-  border: 2px solid var(--dem-main);
-  border-radius: 1em;
-  z-index: 0;
-  -webkit-filter: url(#squiggle);
-          filter: url(#squiggle);
-}
-
 div.radio {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1225,6 +1245,7 @@ div.radio a._peek::after + * {
   border-radius: 1em;
   overflow: auto;
   padding: 0 1em;
+  margin-bottom: 0.5em;
 }
 .speech h2 {
   margin: 0;
@@ -1232,6 +1253,14 @@ div.radio a._peek::after + * {
 }
 .speech p {
   text-indent: calc(1em - 2px);
+}
+.speech.kai {
+  border-color: var(--mc-main);
+  color: var(--mc-main-light);
+}
+.speech.ai {
+  border-color: var(--boss-main);
+  color: var(--boss-main-light);
 }
 /* twine-user-stylesheet #5: "sidebar.css" */
 #devil-sidebar {
@@ -3575,7 +3604,8 @@ setup.card_setup = function() {
     card.addEventListener('dragend', dragEnd);
   })
   // Add listeners to drop_pit
-  var collectPits = document.querySelectorAll("[id^='choice'], #card_hand");
+  var collectPits = document.querySelectorAll("[data-type='card']");
+  console.log(collectPits);
   collectPits.forEach( box => {
       box.addEventListener('dragenter', dragEnter)
       box.addEventListener('dragover', dragOver);
@@ -3603,26 +3633,32 @@ function collectDropPits() {
 function dragstart_handler(ev) {
   setup.log("dragStart");
   // Find choices and disable pointer events
-  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card), #card_hand");
+  var choices = document.querySelectorAll("#menu_choices div[id^='choice'] > *:not(.card)");
   choices.forEach( choice => {
     choice.style.pointerEvents = "none";
+    console.log(choice);
   });
   // Highlight the macro-drop
   var dropPits = document.querySelectorAll(".macro-drop");
   dropPits.forEach( dropPit => {
     dropPit.classList.add('dragHighlight');
+
   });
 }
 
 function dragEnter(ev) {
   ev.preventDefault();
   setup.log("dragOver");
-  ev.target.classList.add('drag_over');
+  if (ev.target ===ev.currentTarget) {
+    ev.target.classList.add('drag_over');
+  }
 }
 
 function dragOver(ev) {
   ev.preventDefault();
-  ev.target.classList.add('drag_over');
+  if (ev.target ===ev.currentTarget) {
+    ev.target.classList.add('drag_over');
+  }
 }
 
 function dragLeave(ev) {
@@ -3965,28 +4001,63 @@ Macro.add("radiolink", {
 &lt;/div&gt; 
 --&gt;</tw-passagedata><tw-passagedata pid="2" name="act1_e-escape" tags="" position="225,100" size="100,100">&lt;&lt;set _choice = [
     new choice({
-        value: 50,
-        requires: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;]
+        value: 30,
+        requires: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;],
+        speaker: &#39;boss&#39;
     }),
     new choice({
-        value: 40,
+        value: 50,
         requires: [&quot;Anguish&quot;, &quot;Physicality&quot;, &quot;Physicality&quot;]
     }),
     new choice({
-        value: 40,
-        /* speaker: &#39;demon&#39; */
+        value: 10,
+        speaker: &#39;demon&#39;
     })
 ]&gt;&gt;
 &lt;&lt;choice_menu&gt;&gt;
-&lt;&lt;done&gt;&gt;
-&lt;&lt;run setup.card_setup()&gt;&gt;
-&lt;&lt;/done&gt;&gt;
 &lt;&lt;set $day to true&gt;&gt;
+
 &lt;&lt;kai&gt;&gt;Fuck fuck fuck fuck fuck..!&lt;&lt;/kai&gt;&gt;
 
 &lt;p&gt;Amid the smoking and sparking chaos of the laboratory, a man thrashes on the floor, wearing steam-covered goggles as he gasps in forced pleasure. Powerful spurts of cum arc into the air in regular intervals from a bulky device strapped around his augmented groin. &lt;/p&gt;
 
-&lt;&lt;ai&gt;&gt;Warning, auxiliary nutrients running low! Please perform override on pump protocols. &lt;&lt;/ai&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="act1_e-escape-choice_0" tags="" position="350,100" size="100,100">Diagnose energy surge.</tw-passagedata><tw-passagedata pid="4" name="act1_e-escape-choice_1" tags="" position="475,100" size="100,100">Repair the pump protocol.</tw-passagedata><tw-passagedata pid="5" name="act1_e-escape-choice_2" tags="" position="600,100" size="100,100">Recirculate the cum back into your system.</tw-passagedata><tw-passagedata pid="6" name="demon_cards_initial" tags="" position="725,100" size="100,100">/* Infernal Grip - 10 P
+&lt;p&gt;Kai could feel the thick adaptive silicon squeeze in undulating waves inside the &lt;&lt;define EdgeWell&gt;&gt; box. Electrical pulses traveling through a lubricant made it impossible for his penis to become desensitized; the whole system was designed to ‘extract’ from him the serum produced in his testicles at a moment’s notice. Obviously every Engineers&#39; stamina had been expanded, and Kai had done his own ‘playing’ with the EdgeWell but the number of loads he was being forced to give was rapidly approaching records. His &lt;&lt;define BOSS&gt;&gt; sounded off a warning in his mind.&lt;/p&gt;
+
+&lt;&lt;ai&gt;&gt;Warning, auxiliary nutrients running low! Please perform override on pump protocols. &lt;&lt;/ai&gt;&gt;
+
+&lt;&lt;card_link &quot;Proceed&quot; act1_e-escape_sc02&gt;&gt;
+    &lt;&lt;set $effects.hand_adjustment += 1&gt;&gt;
+    
+    &lt;&lt;if $consequences.choice_0&gt;&gt;
+        &lt;&lt;set $consequences.Cognition to $consequences.Cognition + 4&gt;&gt;
+        &lt;&lt;/if&gt;&gt; 
+    &lt;&lt;set $consequences to setup.getConsequences(_choice)&gt;&gt;
+&lt;&lt;/card_link&gt;&gt;</tw-passagedata><tw-passagedata pid="3" name="act1_e-escape-choice_0" tags="" position="350,100" size="100,100">Diagnose energy surge.</tw-passagedata><tw-passagedata pid="4" name="act1_e-escape-choice_1" tags="" position="475,100" size="100,100">Repair the pump protocol.</tw-passagedata><tw-passagedata pid="5" name="act1_e-escape-choice_2" tags="" position="600,100" size="100,100">Recirculate the cum back into Kai&#39;s system.</tw-passagedata><tw-passagedata pid="6" name="act1_e-escape_sc02" tags="" position="725,100" size="100,100">&lt;&lt;if $consequences.choice_0&gt;&gt;
+    &lt;&lt;include &#39;escape-consequence_0&#39;&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;include &#39;escape-consequence_0F&#39;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $consequences.choice_1&gt;&gt;
+    &lt;&lt;include &#39;escape-consequence_1&#39;&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;include &#39;escape-consequence_1F&#39;&gt;&gt;
+&lt;&lt;/if&gt;&gt;
+&lt;&lt;if $consequences.choice_2&gt;&gt;
+    &lt;&lt;card_link &quot;Continue&quot; act1_e-escape_sc03a&gt;&gt;
+        &lt;&lt;set $effects.hand_adjustment += 1&gt;&gt;
+    &lt;&lt;/card_link&gt;&gt;
+    &lt;&lt;else&gt;&gt;
+        &lt;&lt;card_link &quot;Continue&quot; act1_e-escape_sc03b&gt;&gt;
+            &lt;&lt;set $effects.hand_adjustment += 1&gt;&gt;
+        &lt;&lt;/card_link&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="escape-consequence_0" tags="" position="850,100" size="100,100">&lt;p&gt;Struggling, Kai crunches forward, gripping the system to pull himself up, gasping through his teeth. He pulls a wire from his engineering tablet and plugs it into a hidden socket along the edge of the device. The tablet&#39;s screen runs with diagnostics and statistics that are too dense to read now but he could comb through the data later, he hopes. He gasps as another load is forced out of him, splashing his goggles. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="8" name="escape-consequence_0F" tags="" position="975,100" size="100,100">&lt;p&gt;The EdgeWell continues to work his augmented cock, forcing load after load from him. Kai gasps as cum strikes him in the face, blinding him momentarily. Almost as soon as he wipes the thick liquid from his goggles another load is pumped onto his face. Its too difficult to concentrate on more than the main issue at hand. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="9" name="escape-consequence_1" tags="" position="1100,100" size="100,100">&lt;p&gt;&quot;BOSS! Override the pump protocols!&quot; Kai shouts his command, forcing his voice over his own moaning.&lt;/P&gt;
+
+&lt;p&gt;An arc of energy buzzes through the device, licking the encased member and causing Kai&#39;s abdomen to clench one last time. His breath catches in anticipation but the pumping has stopped with the last of the sparking light. &lt;/p&gt;
+
+&lt;&lt;ai&gt;&gt;Foreign energy purged from the device, preliminary diagnostics concludes normal functioning.&lt;&lt;/ai&gt;&gt;</tw-passagedata><tw-passagedata pid="10" name="escape-consequence_1F" tags="" position="1225,100" size="100,100">&lt;p&gt;&quot;BOSS! Override the pump protocols!&quot; Kai shouts his command, forcing his voice over his own moaning.&lt;/P&gt;
+&lt;&lt;ai&gt;&gt;Problem identified, Kai, the override won&#39;t work. There is an excess of energy in the system that is causing the pumps to malfunction. I cannot unbind the functions while the energy is inside the device.&lt;&lt;/ai&gt;&gt;
+
+&lt;&lt;set $story.edgewell_damage += 1&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="act1_e-escape_sc03a" tags="" position="100,225" size="100,100">&lt;&lt;set $story.voreXP ++&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="act1_e-escape_sc03b" tags="" position="225,225" size="100,100"></tw-passagedata><tw-passagedata pid="13" name="demon_cards_initial" tags="" position="350,225" size="100,100">/* Infernal Grip - 10 P
 Forbidden Hunger -15
 Edge&#39;s Strain -20
 
@@ -4077,7 +4148,7 @@ Commanding Tug -20 */
     value: -20,
     description: &quot;Second placeholder&quot;,
     rewards: [&quot;Anguish&quot;, &quot;Magnetism&quot;, &quot;Magnetism&quot;, &quot;Cognition&quot;]
-}))&gt;&gt;</tw-passagedata><tw-passagedata pid="7" name="card_setup" tags="" position="850,100" size="100,100">/* 
+}))&gt;&gt;</tw-passagedata><tw-passagedata pid="14" name="card_setup" tags="" position="475,225" size="100,100">/* 
 &lt;&lt;set $cards.push({
     name: &quot;Indifference&quot;,
     id: &quot;card-indifference&quot;,
@@ -4136,7 +4207,7 @@ Commanding Tug -20 */
     description: &quot;Second placeholder&quot;,
     tags: [&quot;Magnetism&quot;, &quot;Magnetism&quot;],
     rewards: []
-})&gt;&gt; */</tw-passagedata><tw-passagedata pid="8" name="cards_engineer" tags="" position="975,100" size="100,100">&lt;&lt;set $cards.push({
+})&gt;&gt; */</tw-passagedata><tw-passagedata pid="15" name="cards_engineer" tags="" position="600,225" size="100,100">&lt;&lt;set $cards.push({
     name: &quot;Hardwire&quot;,
     id: &quot;card-hardwire&quot;,
     class: &quot;card engineer&quot;,
@@ -4224,7 +4295,7 @@ Commanding Tug -20 */
     description: &quot;You are constantly swollen.&quot;,
     tags: [&quot;Physicality&quot;],
     rewards: []
-})&gt;&gt;</tw-passagedata><tw-passagedata pid="9" name="character_select" tags="" position="1100,100" size="100,100">&lt;&lt;done&gt;&gt;
+})&gt;&gt;</tw-passagedata><tw-passagedata pid="16" name="character_select" tags="" position="725,225" size="100,100">&lt;&lt;done&gt;&gt;
     &lt;&lt;if $act is 1&gt;&gt;
         &lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/engineer_pent.jpg&quot; &quot;#engineer a&quot;&gt;&gt;
         &lt;&lt;/if&gt;&gt;
@@ -4248,13 +4319,13 @@ Commanding Tug -20 */
             &lt;&lt;set $character = &quot;scientist&quot;&gt;&gt;
         &lt;&lt;/link&gt;&gt;
     &lt;/li&gt;
-&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="10" name="night_start" tags="" position="1225,100" size="100,100">&lt;&lt;set $night_count ++&gt;&gt;
+&lt;/ul&gt;</tw-passagedata><tw-passagedata pid="17" name="night_start" tags="" position="850,225" size="100,100">&lt;&lt;set $night_count ++&gt;&gt;
 &lt;&lt;if $night_count == 1&gt;&gt;
 &lt;p&gt;In the dream-scape of this mind, you manifest like a dark nova; Memories and figments are absorbed into you as you take a hold inside this vessel. Like a thick oil you seep into the crevices and gaps until you feel the pressure thicken, your presence filling the void.&lt;/p&gt;
 
 &lt;p&gt;Gathering the memories that you have absorbed, you learn your vessel&#39;s name-- &lt;&lt;print $vessel.name + &#39; &#39; + $vessel.last_name&gt;&gt;; A Level II Engineer on the R.V. Nectu. &lt;/p&gt;
     &lt;&lt;else&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="11" name="test" tags="" position="100,225" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set _choice = [
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="18" name="test" tags="" position="975,225" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;set _choice = [
     new choice({
         value: 50,
         requires: [&quot;Anguish&quot;, &quot;Cognition&quot;, &quot;Cognition&quot;]
@@ -4288,7 +4359,7 @@ Commanding Tug -20 */
 &lt;&lt;/card_link&gt;&gt;
 
 &lt;span id=&quot;status&quot;&gt;&lt;/span&gt;
-&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="12" name="testResults" tags="" position="225,225" size="100,100">&lt;&lt;if $consequences.choice_0&gt;&gt;
+&lt;&lt;/nobr&gt;&gt;</tw-passagedata><tw-passagedata pid="19" name="testResults" tags="" position="1100,225" size="100,100">&lt;&lt;if $consequences.choice_0&gt;&gt;
     &lt;&lt;include &#39;test-consequence_0&#39;&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;include &#39;test-consequence_0F&#39;&gt;&gt;
@@ -4297,7 +4368,7 @@ Commanding Tug -20 */
     &lt;&lt;include &#39;test-consequence_1&#39;&gt;&gt;
     &lt;&lt;else&gt;&gt;
         &lt;&lt;include &#39;test-consequence_1F&#39;&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="13" name="test-choice_0" tags="" position="350,225" size="100,100">The ship comes first, get status updates on damaged systems and see if the automated emergency systems are online.</tw-passagedata><tw-passagedata pid="14" name="test-choice_1" tags="" position="475,225" size="100,100">$vessel.name&#39;s health comes first, look for a medical kit to staunch the bleeding.</tw-passagedata><tw-passagedata pid="15" name="test-choice_2" tags="" position="600,225" size="100,100">So much delicious pain.</tw-passagedata><tw-passagedata pid="16" name="test-consequence_0" tags="" position="725,225" size="100,100">You get the status updates on the damaged systems.</tw-passagedata><tw-passagedata pid="17" name="test-consequence_0F" tags="" position="850,225" size="100,100">You find the console is offline.</tw-passagedata><tw-passagedata pid="18" name="test-consequence_1" tags="" position="975,225" size="100,100">You find a medical kit and staunch the bleeding.</tw-passagedata><tw-passagedata pid="19" name="test-consequence_1F" tags="" position="1100,225" size="100,100">You find a medical kit but it&#39;s empty.</tw-passagedata><tw-passagedata pid="20" name="define_Deluder" tags="" position="1225,225" size="100,100">An infernal spirit who uses the tools of deceit to mislead people.</tw-passagedata><tw-passagedata pid="21" name="StoryAuthor" tags="" position="100,350" size="100,100">&lt;div&gt;Musclemage&lt;/div&gt;</tw-passagedata><tw-passagedata pid="22" name="StorySettings" tags="" position="225,350" size="100,100">jquery: on</tw-passagedata><tw-passagedata pid="23" name="StoryInit" tags="" position="350,350" size="100,100">&lt;&lt;set $stress = 0&gt;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="test-choice_0" tags="" position="1225,225" size="100,100">The ship comes first, get status updates on damaged systems and see if the automated emergency systems are online.</tw-passagedata><tw-passagedata pid="21" name="test-choice_1" tags="" position="100,350" size="100,100">$vessel.name&#39;s health comes first, look for a medical kit to staunch the bleeding.</tw-passagedata><tw-passagedata pid="22" name="test-choice_2" tags="" position="225,350" size="100,100">So much delicious pain.</tw-passagedata><tw-passagedata pid="23" name="test-consequence_0" tags="" position="350,350" size="100,100">You get the status updates on the damaged systems.</tw-passagedata><tw-passagedata pid="24" name="test-consequence_0F" tags="" position="475,350" size="100,100">You find the console is offline.</tw-passagedata><tw-passagedata pid="25" name="test-consequence_1" tags="" position="600,350" size="100,100">You find a medical kit and staunch the bleeding.</tw-passagedata><tw-passagedata pid="26" name="test-consequence_1F" tags="" position="725,350" size="100,100">You find a medical kit but it&#39;s empty.</tw-passagedata><tw-passagedata pid="27" name="define_Deluder" tags="term" position="850,350" size="100,100">An infernal spirit who uses the tools of deceit to mislead people.</tw-passagedata><tw-passagedata pid="28" name="define_BOSS" tags="term" position="975,350" size="100,100">The Broad Operations and Support System (BOSS) is a personal AI assistant. Each crew member has their own instance of BOSS that manages their cybernetic implants. He also provides firewall protection, preventing corruption to the mind when interfacing with unsecured systems, such as evil spirits.</tw-passagedata><tw-passagedata pid="29" name="define_EdgeWell" tags="term" position="1100,350" size="100,100">A technology that enhances and binds the wearer&#39;s cock and balls, allowing their testicles to rapidly produce highly edited genetic serums. It is particularly necessary in space travel as it refreshes the temporary genes that allows the crew to adapt to the strains of space travel, providing an engineered protein that allows humans to survive extreme temperatures and radiation exposure.</tw-passagedata><tw-passagedata pid="30" name="define_EpiVore" tags="term" position="1225,350" size="100,100">A technology that is a biomechanical replacement for a person&#39;s stomach. It allows incredibly fast and efficient uptake of nutrients as well as active filtering for chemicals that allows medication and compounds to be taken up by ingestion. It also handles dietary balance as it stores dense amounts of nutrients and adjusts their release according to sensors and protocols.</tw-passagedata><tw-passagedata pid="31" name="StoryAuthor" tags="" position="100,475" size="100,100">&lt;div&gt;Musclemage&lt;/div&gt;</tw-passagedata><tw-passagedata pid="32" name="StorySettings" tags="" position="225,475" size="100,100">jquery: on</tw-passagedata><tw-passagedata pid="33" name="StoryInit" tags="" position="350,475" size="100,100">&lt;&lt;set $stress = 0&gt;&gt;
 &lt;&lt;set $demonic_might = 0&gt;&gt;
 &lt;&lt;set $night_count = 0&gt;&gt;
 &lt;&lt;set $vessel =  {
@@ -4316,7 +4387,9 @@ Commanding Tug -20 */
                 b: &quot;false&quot;,
                 c: &quot;false&quot;,
                 d: &quot;false&quot;
-        }
+        },
+		edgewell_damage: 0,
+		voreXP: 0
 }&gt;&gt;
 &lt;&lt;set $cards = []&gt;&gt;
 &lt;&lt;include &#39;card_setup&#39;&gt;&gt;
@@ -4328,7 +4401,7 @@ Commanding Tug -20 */
 &lt;&lt;set $effects = {
 	hand_adjustment: 0
 }&gt;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&quot; /&gt;</tw-passagedata><tw-passagedata pid="24" name="PassageHeader" tags="" position="475,350" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;checkConsequences&gt;&gt;&lt;&lt;/silently&gt;&gt;</tw-passagedata><tw-passagedata pid="25" name="StoryInterface" tags="" position="600,350" size="100,100">&lt;div id=&quot;master&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&quot; /&gt;</tw-passagedata><tw-passagedata pid="34" name="PassageHeader" tags="" position="475,475" size="100,100">&lt;&lt;silently&gt;&gt;&lt;&lt;checkConsequences&gt;&gt;&lt;&lt;/silently&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="StoryInterface" tags="" position="600,475" size="100,100">&lt;div id=&quot;master&quot;&gt;
 	&lt;div id=&quot;background&quot; data-init-passage=&quot;background&quot;&gt;&lt;/div&gt;
 	&lt;div id=&quot;menu&quot; data-passage=&quot;StoryMenu&quot;&gt;&lt;/div&gt;
 	&lt;div id=&quot;StoryInit&quot; data-passage=&quot;StoryInit&quot;&gt;&lt;/div&gt;
@@ -4343,19 +4416,19 @@ Commanding Tug -20 */
 
 	&lt;div id=&quot;load-save&quot; data-passage=&quot;SaveLoad&quot;&gt;&lt;/div&gt;
 	
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="26" name="background" tags="" position="725,350" size="100,100">&lt;div class=&quot;video-wrapper&quot;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="36" name="background" tags="" position="725,475" size="100,100">&lt;div class=&quot;video-wrapper&quot;&gt;
 &lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot; id=&quot;hero-video&quot;&gt; &lt;source src=&quot;../assets/Fiberbackground.mp4&quot; type=&quot;video/mp4&quot;&gt;&lt;/video&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="27" name="foreground" tags="" position="850,350" size="100,100">&lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; playbackRate=&quot;0.5&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot;  id=&quot;ink-corner&quot;&gt; &lt;source src=&quot;../assets/ink_corner.webm&quot; type=&quot;video/webm&quot;&gt;&lt;/video&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="37" name="foreground" tags="" position="850,475" size="100,100">&lt;video aria-hidden=&quot;true&quot; playsinline=&quot;&quot; playbackRate=&quot;0.5&quot; autoplay=&quot;&quot; muted=&quot;&quot; loop=&quot;&quot;  id=&quot;ink-corner&quot;&gt; &lt;source src=&quot;../assets/ink_corner.webm&quot; type=&quot;video/webm&quot;&gt;&lt;/video&gt;
 
 &lt;div id=&quot;foreground-wave&quot;&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="28" name="SaveLoad" tags="" position="975,350" size="100,100">&lt;&lt;link &#39;Restart&#39;&gt;&gt;&lt;&lt;run UI.restart()&gt;&gt;&lt;&lt;/link&gt;&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="38" name="SaveLoad" tags="" position="975,475" size="100,100">&lt;&lt;link &#39;Restart&#39;&gt;&gt;&lt;&lt;run UI.restart()&gt;&gt;&lt;&lt;/link&gt;&gt;
 &lt;&lt;if previous() != &quot;&quot;&gt;&gt;
 	&lt;&lt;back &#39;Back&#39;&gt;&gt;
 &lt;&lt;/if&gt;&gt;
 
 &lt;span class=&quot;material-symbols-outlined menu_state&quot;&gt;
 	&lt;&lt;link &#39;save_as&#39;&gt;&gt;&lt;&lt;run UI.saves()&gt;&gt;&lt;&lt;/link&gt;&gt;
-&lt;/span&gt;</tw-passagedata><tw-passagedata pid="29" name="StoryMenu" tags="" position="1100,350" size="100,100">&lt;div id=&quot;devil-sidebar&quot;&gt;
+&lt;/span&gt;</tw-passagedata><tw-passagedata pid="39" name="StoryMenu" tags="" position="1100,475" size="100,100">&lt;div id=&quot;devil-sidebar&quot;&gt;
 	&lt;div class=&quot;container&quot;&gt;
 		&lt;div id=&quot;Anguish&quot;&gt;
 			&lt;h2&gt;Anguish&lt;/h2&gt;
@@ -4409,7 +4482,7 @@ Commanding Tug -20 */
 				return val.id == _drag.data.id;
 			})&gt;&gt;
     &lt;&lt;/drop&gt;&gt;
-&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="30" name="PassageFooter" tags="" position="1225,350" size="100,100">&lt;div id=&quot;modal_container&quot; class=&quot;modal&quot;&gt;
+&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="40" name="PassageFooter" tags="" position="1225,475" size="100,100">&lt;div id=&quot;modal_container&quot; class=&quot;modal&quot;&gt;
 	&lt;label id=&quot;modal_exit&quot;&gt;
 		&lt;&lt;link &quot;&quot;&gt;&gt;
 			&lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
@@ -4471,33 +4544,39 @@ Commanding Tug -20 */
             /&gt;
         &lt;/filter&gt;
     &lt;/defs&gt;
-&lt;/svg&gt;</tw-passagedata><tw-passagedata pid="31" name="definition" tags="widget" position="100,475" size="100,100">&lt;&lt;widget &quot;define&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
+&lt;/svg&gt;</tw-passagedata><tw-passagedata pid="41" name="definition" tags="widget" position="100,600" size="100,100">&lt;&lt;widget &quot;define&quot;&gt;&gt;&lt;&lt;nobr&gt;&gt;
     &lt;&lt;link `_args[0]`&gt;&gt;
-        &lt;&lt;replace #modal-text&gt;&gt;&lt;&lt;include `&#39;define_&#39; + _args[0]`&gt;&gt;&lt;&lt;/replace&gt;&gt;
+        &lt;&lt;replace #modal-text&gt;&gt;
+            &lt;&lt;include `&#39;define_&#39; + _args[0]`&gt;&gt;
+            
+        &lt;&lt;/replace&gt;&gt;
         &lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
     &lt;&lt;/link&gt;&gt;
-&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="32" name="flare" tags="widget nobr" position="225,475" size="100,100">/* Causes an element to glow for a half second */
+&lt;&lt;/nobr&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="dictionary" tags="widget" position="225,600" size="100,100">&lt;&lt;for _i range Story.filter((dictionary) =&gt; dictionary.tags.includes(&quot;term&quot;))&gt;&gt;
+    &lt;&lt;print _i.title.replace(/^define_/, &quot;&quot;)&gt;&gt;
+&lt;&lt;/for&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="flare" tags="widget nobr" position="350,600" size="100,100">/* Causes an element to glow for a half second */
 &lt;&lt;widget &quot;flare&quot;&gt;&gt;
     &lt;&lt;toggleclass _args[0] &#39;flare&#39;&gt;&gt;
     &lt;&lt;timed 400ms&gt;&gt;
         &lt;&lt;toggleclass _args[0] &#39;flare&#39;&gt;&gt;
     &lt;&lt;/timed&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="33" name="card_link" tags="widget nobr" position="350,475" size="100,100">/* Creates a link, fires its code and then saves the current hand */
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="44" name="card_link" tags="widget nobr" position="475,600" size="100,100">/* Creates a link, fires its code and then saves the current hand */
 &lt;&lt;widget &quot;card_link&quot; container&gt;&gt;
     &lt;&lt;link _args[0] _args[1]&gt;&gt;
         &lt;&lt;set $old_hand to clone($current_hand)&gt;&gt;
         _contents
     &lt;&lt;/link&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="34" name="Character_widgets" tags="widget nobr" position="475,475" size="100,100">&lt;&lt;widget &quot;kai&quot; container&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="45" name="Character_widgets" tags="widget nobr" position="600,600" size="100,100">&lt;&lt;widget &quot;kai&quot; container&gt;&gt;
+    &lt;&lt;set _adverbial to _args&gt;&gt;
     &lt;section class=&quot;speech kai&quot;&gt;
-        &lt;h2&gt;Kai&lt;/h2&gt;
+        &lt;h2&gt;Kai &lt;&lt;print _adverbial&gt;&gt;&lt;/h2&gt;
         &lt;p&gt;_contents&lt;/p&gt;
     &lt;/section&gt;
 &lt;&lt;/widget&gt;&gt;
 
 &lt;&lt;widget &quot;ai&quot; container&gt;&gt;
     &lt;section class=&quot;speech ai&quot;&gt;
-        &lt;h2&gt;AI&lt;/h2&gt;
+        &lt;h2&gt;BOSS&lt;/h2&gt;
         &lt;p&gt;_contents&lt;/p&gt;
     &lt;/section&gt;
 &lt;&lt;/widget&gt;&gt;
@@ -4507,7 +4586,7 @@ Commanding Tug -20 */
         &lt;h2&gt;Demon&lt;/h2&gt;
         &lt;p&gt;_contents&lt;/p&gt;
     &lt;/section&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="35" name="cards" tags="widget nobr" position="600,475" size="100,100">&lt;&lt;widget &quot;card&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="46" name="cards" tags="widget nobr" position="725,600" size="100,100">&lt;&lt;widget &quot;card&quot;&gt;&gt;
     &lt;&lt;drag &#39;card&#39; type &#39;card&#39; class `_args[0].class` id `_args[0].id`&gt;&gt;
         &lt;h3&gt;_args[0].name&lt;/h3&gt; 
         &lt;h2&gt;_args[0].value&lt;/h2&gt;
@@ -4530,7 +4609,7 @@ Commanding Tug -20 */
         
         &lt;&lt;data _args[0]&gt;&gt;
     &lt;&lt;/drag&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="36" name="choice_menu" tags="widget nobr" position="725,475" size="100,100">&lt;&lt;widget &quot;choice_menu&quot;&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="47" name="choice_menu" tags="widget nobr" position="850,600" size="100,100">&lt;&lt;widget &quot;choice_menu&quot; _choice&gt;&gt;
 &lt;div id=&#39;menu_choices&#39;&gt;
     &lt;&lt;for _i, _each range _choice&gt;&gt;
         &lt;&lt;capture _each, _i&gt;&gt;
@@ -4602,11 +4681,14 @@ Commanding Tug -20 */
         &lt;&lt;/capture&gt;&gt;
     &lt;&lt;/for&gt;&gt;
 &lt;/div&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="37" name="checkConsequences" tags="widget nobr" position="850,475" size="100,100">&lt;&lt;widget &quot;checkConsequences&quot;&gt;&gt;
+&lt;&lt;done&gt;&gt;
+&lt;&lt;run setup.card_setup()&gt;&gt;
+&lt;&lt;/done&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="48" name="checkConsequences" tags="widget nobr" position="975,600" size="100,100">&lt;&lt;widget &quot;checkConsequences&quot;&gt;&gt;
     &lt;&lt;if Object.keys($consequences).length gt 0&gt;&gt;
         &lt;&lt;runConsequences&gt;&gt;
     &lt;&lt;/if&gt;&gt;
-&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="38" name="runConsequences" tags="widget nobr" position="975,475" size="100,100">&lt;&lt;widget &quot;runConsequences&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
+&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="49" name="runConsequences" tags="widget nobr" position="1100,600" size="100,100">&lt;&lt;widget &quot;runConsequences&quot;&gt;&gt;&lt;&lt;silently&gt;&gt;
 &lt;&lt;set _delay_num = 0&gt;&gt;
 &lt;&lt;for _term, _value range $consequences&gt;&gt;
     &lt;&lt;set _i = _value&gt;&gt;  
@@ -4650,16 +4732,18 @@ Commanding Tug -20 */
     &lt;&lt;set $consequences = new consequences()&gt;&gt;
 &lt;&lt;/timed&gt;&gt;
 
-&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="39" name="Start" tags="" position="1100,475" size="100,100">&lt;p id=&quot;test&quot; style=&quot;display: block; text-align: center; text-indent: 0; font-size: 24px;&quot;&gt;&lt;span class=&quot;infernal jitter&quot;&gt;&lt;&lt;link &#39;Pain&#39; &#39;start_pain&#39;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;&lt;/silently&gt;&gt;&lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="50" name="Start" tags="" position="1225,600" size="100,100">&lt;p id=&quot;test&quot; style=&quot;display: block; text-align: center; text-indent: 0; font-size: 24px;&quot;&gt;&lt;span class=&quot;infernal jitter&quot;&gt;&lt;&lt;link &#39;Pain&#39; &#39;start_pain&#39;&gt;&gt;&lt;&lt;/link&gt;&gt;&lt;/span&gt;&lt;/p&gt;
+
+&lt;&lt;link &#39;Latest&#39; &#39;act1_e-escape&#39;&gt;&gt;&lt;&lt;/link&gt;&gt;
 
 &lt;p&gt;&lt;&lt;link &#39;Test&#39; &#39;test&#39;&gt;&gt;
-&lt;&lt;/link&gt;&gt;&lt;/p&gt;</tw-passagedata><tw-passagedata pid="40" name="start_pain" tags="" position="1225,475" size="100,100">&lt;p&gt;Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a &lt;&lt;define &quot;Deluder&quot;&gt;&gt;, it is not enough.&lt;/p&gt;
+&lt;&lt;/link&gt;&gt;&lt;/p&gt;</tw-passagedata><tw-passagedata pid="51" name="start_pain" tags="" position="100,725" size="100,100">&lt;p&gt;Pain is familiar to you, a constant companion in Hell. This pain, however, is self-inflicted and by your estimation as a &lt;&lt;define &quot;Deluder&quot;&gt;&gt;, it is not enough.&lt;/p&gt;
 
 &lt;p&gt;You need to be free, and freedom has come in the form of a tear in your prison. The tear is rimmed in an angry aurora of blue fire. Your lesser brethren swarm at the hole, clawing at each other climb through. It is bittersweet that what allows them to slip through the opening is their small size-- metaphysically of course; It would be a simple thing to shapeshift through it as a liquid if this was a common opening, but Hell is made of more complex boundaries than the physical. Alas, you will need to strip yourself of more &#39;presence&#39; to navigate this opening.&lt;/p&gt;
 
 &lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_thewound.jpg&quot;&gt;&gt;
 
-[[You take a moment -&gt; start_take_a_moment]]</tw-passagedata><tw-passagedata pid="41" name="start_take_a_moment" tags="" position="100,600" size="100,100">&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg&quot;&gt;&gt;
+[[You take a moment -&gt; start_take_a_moment]]</tw-passagedata><tw-passagedata pid="52" name="start_take_a_moment" tags="" position="225,725" size="100,100">&lt;&lt;art &quot;https://medieve.github.io/Devil-Warp/assets/start_cinquefoil.jpg&quot;&gt;&gt;
 
 &lt;p&gt;Your open cinquefoil court is surfaced with glistening tight ridges. The arches that divides the court into its five lobes are ribbed, pulsing gently as they soar overhead into engorged heads that sporadically weep a thin lubricant. &lt;/p&gt;
 
@@ -4693,7 +4777,7 @@ Commanding Tug -20 */
                 &lt;&lt;elseif $lostItem is &quot;whip&quot;&gt;&gt;
                         [[Leave your Whip behind|start_make_demon1]]
         &lt;&lt;/if&gt;&gt;
-&lt;&lt;/do&gt;&gt;</tw-passagedata><tw-passagedata pid="42" name="start_make_demon1" tags="" position="225,600" size="100,100">&lt;&lt;switch $lostItem&gt;&gt;
+&lt;&lt;/do&gt;&gt;</tw-passagedata><tw-passagedata pid="53" name="start_make_demon1" tags="" position="350,725" size="100,100">&lt;&lt;switch $lostItem&gt;&gt;
         &lt;&lt;case &#39;orb&#39;&gt;&gt;
                 &lt;&lt;include &#39;scene_orb&#39;&gt;&gt;
         &lt;&lt;case &#39;eye&#39;&gt;&gt;
@@ -4702,11 +4786,11 @@ Commanding Tug -20 */
                 &lt;&lt;include &#39;scene_whip&#39;&gt;&gt;
 &lt;&lt;/switch&gt;&gt;
 
-&lt;&lt;linkappend &#39;The chaotic scene is left behind as you fly towards the tear in the dimensional veil of Hell.&#39; t8n&gt;&gt;&lt;&lt;include &#39;start_make_demon1_continue1&#39;&gt;&gt;&lt;&lt;/linkappend&gt;&gt;</tw-passagedata><tw-passagedata pid="43" name="start_make_demon1_continue1" tags="" position="350,600" size="100,100">&lt;p&gt;Near the tear, reality splinters and refracts upon itself like a shattered mirror. Your visage is caught in the reflections and you pause in your diminished form. While a great number of Demonic Might has been left behind, you have been left with a semblance of self. &lt;/p&gt;
+&lt;&lt;linkappend &#39;The chaotic scene is left behind as you fly towards the tear in the dimensional veil of Hell.&#39; t8n&gt;&gt;&lt;&lt;include &#39;start_make_demon1_continue1&#39;&gt;&gt;&lt;&lt;/linkappend&gt;&gt;</tw-passagedata><tw-passagedata pid="54" name="start_make_demon1_continue1" tags="" position="475,725" size="100,100">&lt;p&gt;Near the tear, reality splinters and refracts upon itself like a shattered mirror. Your visage is caught in the reflections and you pause in your diminished form. While a great number of Demonic Might has been left behind, you have been left with a semblance of self. &lt;/p&gt;
 
 &lt;p&gt;While your psychic strength has been diminished, your physical form weighs with heavy bulk. Each muscle rises proud and sweeps into each other in aesthetic repetition. &lt;/p&gt;
 
-[[Find a host -&gt; start_the_host]]</tw-passagedata><tw-passagedata pid="44" name="scene_orb" tags="" position="475,600" size="100,100">&lt;p&gt;You leave your orb behind where shoving imps edge around in a fearful circle, you smirk at the thought of some far-future where if you ever return if any of them would have dared to claim the tool.&lt;/p&gt;
+[[Find a host -&gt; start_the_host]]</tw-passagedata><tw-passagedata pid="55" name="scene_orb" tags="" position="600,725" size="100,100">&lt;p&gt;You leave your orb behind where shoving imps edge around in a fearful circle, you smirk at the thought of some far-future where if you ever return if any of them would have dared to claim the tool.&lt;/p&gt;
 
 &lt;div class=&quot;choices&quot;&gt;
         &lt;label class=&quot;_peek&quot;&gt;
@@ -4721,7 +4805,7 @@ Commanding Tug -20 */
                         &lt;&lt;toggleclass #modal_container &quot;show&quot;&gt;&gt;
                 &lt;&lt;/link&gt;&gt;
         &lt;/label&gt;
-&lt;/div&gt;</tw-passagedata><tw-passagedata pid="45" name="start_imp_authority" tags="" position="600,600" size="100,100">An imp picks up the orb.</tw-passagedata><tw-passagedata pid="46" name="scene_eye" tags="" position="725,600" size="100,100">&lt;p&gt;You leave your Eye behind where a lowly imp slides in to claim it, against its siblings grasping claws it places the eye against his socket. With a flare of sickly green light the imp vanishes to elsewhere. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="47" name="scene_whip" tags="" position="850,600" size="100,100">&lt;p&gt;You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.&lt;/p&gt;</tw-passagedata><tw-passagedata pid="48" name="start_the_host" tags="" position="975,600" size="100,100">&lt;p&gt;Through the opening you find a chaotic scene: flows of dimensional tatters have ripped through a laboratory, a riot of flashing energy and rains of sparks fall down from fixtures, echoes of demonic cackling escape into half-shut containment doors and two men in the throes of changes. &lt;/p&gt;
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="56" name="start_imp_authority" tags="" position="725,725" size="100,100">An imp picks up the orb.</tw-passagedata><tw-passagedata pid="57" name="scene_eye" tags="" position="850,725" size="100,100">&lt;p&gt;You leave your Eye behind where a lowly imp slides in to claim it, against its siblings grasping claws it places the eye against his socket. With a flare of sickly green light the imp vanishes to elsewhere. &lt;/p&gt;</tw-passagedata><tw-passagedata pid="58" name="scene_whip" tags="" position="975,725" size="100,100">&lt;p&gt;You leave your Whip behind where it is claimed by a nimble imp. It cracks the whip, without training, it crackles with electrical bolts that strike its fellows who are overcome with energy and vigor. A frenzied orgy breaks out, noisy with impish groans and electrical crackling.&lt;/p&gt;</tw-passagedata><tw-passagedata pid="59" name="start_the_host" tags="" position="1100,725" size="100,100">&lt;p&gt;Through the opening you find a chaotic scene: flows of dimensional tatters have ripped through a laboratory, a riot of flashing energy and rains of sparks fall down from fixtures, echoes of demonic cackling escape into half-shut containment doors and two men in the throes of changes. &lt;/p&gt;
 
 &lt;p&gt;A man in a lab coat is mesmerized by an image of himself being knit together by liquid light, cloned by pseudo matter pulled from a mirror reality. &lt;/p&gt;
 

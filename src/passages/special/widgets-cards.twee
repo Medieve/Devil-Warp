@@ -25,7 +25,7 @@
 <</widget>>
 
 :: choice_menu [widget nobr]
-<<widget "choice_menu">>
+<<widget "choice_menu" _choice>>
 <div id='menu_choices'>
     <<for _i, _each range _choice>>
         <<capture _each, _i>>
@@ -97,6 +97,9 @@
         <</capture>>
     <</for>>
 </div>
+<<done>>
+<<run setup.card_setup()>>
+<</done>>
 <</widget>>
 
 :: checkConsequences [widget nobr]

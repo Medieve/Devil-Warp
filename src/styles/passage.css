@@ -112,115 +112,6 @@ span.infernal::before {
     background-position: 100% 100%;
   }
 }
-#menu_choices [id^=choice] {
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  position: relative;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: auto 0.5rem auto;
-      grid-template-areas: "description description description description description description" "current card1 card2 card3 value rewards";
-  -ms-grid-columns: auto 0 auto 0 auto 0 auto 0 auto 0 1fr;
-  grid-template-columns: auto auto auto auto auto 1fr;
-  gap: 0.5rem 0;
-  place-content: center;
-  border: 2px solid white;
-  padding: 1em 2em;
-}
-#menu_choices [id^=choice] .choice_text {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  -ms-grid-column-span: 11;
-  grid-area: description;
-  text-align: center;
-}
-#menu_choices [id^=choice] .requirements, #menu_choices [id^=choice] .rewards {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  text-align: center;
-}
-#menu_choices [id^=choice] .rewards {
-  -ms-grid-row: 3;
-  -ms-grid-column: 11;
-  grid-area: rewards;
-}
-#menu_choices [id^=choice] h2 {
-  display: -ms-grid;
-  display: grid;
-  place-content: center;
-  margin: 0;
-  width: 50px;
-  aspect-ratio: 1;
-  border: 2px solid var(--ui-medium);
-  border-radius: 50%;
-  background: var(--ui-dark);
-  text-align: center;
-  z-index: 1;
-}
-#menu_choices [id^=choice] h2.value {
-  -ms-grid-row: 3;
-  -ms-grid-column: 9;
-  grid-area: value;
-}
-#menu_choices [id^=choice] h2.current {
-  -ms-grid-row: 3;
-  -ms-grid-column: 1;
-  grid-area: current;
-  position: relative;
-  background: none;
-  border: none;
-}
-#menu_choices [id^=choice] h2.current::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: var(--col-black);
-  border: 2px solid var(--ui-medium);
-  border-radius: 0;
-  rotate: 45deg;
-  z-index: -1;
-}
-#menu_choices [id^=choice] p {
-  margin: 0;
-}
-#menu_choices [id^=choice].success h2.current {
-  color: var(--ui-dark);
-}
-#menu_choices [id^=choice].success h2.current::before {
-  background: var(--ui-accent);
-  border-color: var(--ui-accent-light);
-}
-
-#menu_choices [id^=choice_].vessel {
-  background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
-  border: 2px solid var(--mc-main);
-  color: var(--mc-main-light);
-  border-radius: 1em;
-}
-
-#menu_choices [id^=choice_].demon {
-  position: relative;
-  color: var(--dem-main-light);
-  border: unset;
-}
-#menu_choices [id^=choice_].demon::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
-  border: 2px solid var(--dem-main);
-  border-radius: 1em;
-  z-index: 0;
-  -webkit-filter: url(#squiggle);
-          filter: url(#squiggle);
-}
-
 div.radio {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -350,6 +241,7 @@ div.radio a._peek::after + * {
   border-radius: 1em;
   overflow: auto;
   padding: 0 1em;
+  margin-bottom: 0.5em;
 }
 .speech h2 {
   margin: 0;
@@ -357,4 +249,12 @@ div.radio a._peek::after + * {
 }
 .speech p {
   text-indent: calc(1em - 2px);
+}
+.speech.kai {
+  border-color: var(--mc-main);
+  color: var(--mc-main-light);
+}
+.speech.ai {
+  border-color: var(--boss-main);
+  color: var(--boss-main-light);
 }

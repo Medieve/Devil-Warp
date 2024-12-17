@@ -1,10 +1,18 @@
 :: definition [widget]
 <<widget "define">><<nobr>>
     <<link `_args[0]`>>
-        <<replace #modal-text>><<include `'define_' + _args[0]`>><</replace>>
+        <<replace #modal-text>>
+            <<include `'define_' + _args[0]`>>
+            
+        <</replace>>
         <<toggleclass #modal_container "show">>
     <</link>>
 <</nobr>><</widget>>
+
+:: dictionary [widget]
+<<for _i range Story.filter((dictionary) => dictionary.tags.includes("term"))>>
+    <<print _i.title.replace(/^define_/, "")>>
+<</for>>
 
 :: flare [widget nobr]
 /* Causes an element to glow for a half second */
@@ -26,15 +34,16 @@
 
 :: Character_widgets [widget nobr]
 <<widget "kai" container>>
+    <<set _adverbial to _args>>
     <section class="speech kai">
-        <h2>Kai</h2>
+        <h2>Kai <<print _adverbial>></h2>
         <p>_contents</p>
     </section>
 <</widget>>
 
 <<widget "ai" container>>
     <section class="speech ai">
-        <h2>AI</h2>
+        <h2>BOSS</h2>
         <p>_contents</p>
     </section>
 <</widget>>

@@ -11,5 +11,9 @@
   user-select: none;}
 
 .dragHighlight, .drag-over {
-  border: var(--ui-light) 2px dashed !important;
+  border: var(--ui-accent) 2px dashed !important;
+}
+
+.drag_over {
+  background: red;
 }

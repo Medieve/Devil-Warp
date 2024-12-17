@@ -1,28 +1,38 @@
 :: act1_e-escape
 <<set _choice = [
     new choice({
-        value: 50,
-        requires: ["Anguish", "Cognition", "Cognition"]
+        value: 30,
+        requires: ["Anguish", "Cognition", "Cognition"],
+        speaker: 'boss'
     }),
     new choice({
-        value: 40,
+        value: 50,
         requires: ["Anguish", "Physicality", "Physicality"]
     }),
     new choice({
-        value: 40,
-        /* speaker: 'demon' */
+        value: 10,
+        speaker: 'demon'
     })
 ]>>
 <<choice_menu>>
-<<done>>
-<<run setup.card_setup()>>
-<</done>>
 <<set $day to true>>
+
 <<kai>>Fuck fuck fuck fuck fuck..!<</kai>>
 
 <p>Amid the smoking and sparking chaos of the laboratory, a man thrashes on the floor, wearing steam-covered goggles as he gasps in forced pleasure. Powerful spurts of cum arc into the air in regular intervals from a bulky device strapped around his augmented groin. </p>
 
+<p>Kai could feel the thick adaptive silicon squeeze in undulating waves inside the <<define EdgeWell>> box. Electrical pulses traveling through a lubricant made it impossible for his penis to become desensitized; the whole system was designed to ‘extract’ from him the serum produced in his testicles at a moment’s notice. Obviously every Engineers' stamina had been expanded, and Kai had done his own ‘playing’ with the EdgeWell but the number of loads he was being forced to give was rapidly approaching records. His <<define BOSS>> sounded off a warning in his mind.</p>
+
 <<ai>>Warning, auxiliary nutrients running low! Please perform override on pump protocols. <</ai>>
+
+<<card_link "Proceed" act1_e-escape_sc02>>
+    <<set $effects.hand_adjustment += 1>>
+    
+    <<if $consequences.choice_0>>
+        <<set $consequences.Cognition to $consequences.Cognition + 4>>
+        <</if>> 
+    <<set $consequences to setup.getConsequences(_choice)>>
+<</card_link>>
 
 :: act1_e-escape-choice_0
 Diagnose energy surge. 
@@ -31,4 +41,50 @@ Diagnose energy surge.
 Repair the pump protocol.
 
 :: act1_e-escape-choice_2
-Recirculate the cum back into your system. 
+Recirculate the cum back into Kai's system. 
+
+:: act1_e-escape_sc02
+
+<<if $consequences.choice_0>>
+    <<include 'escape-consequence_0'>>
+    <<else>>
+        <<include 'escape-consequence_0F'>>
+<</if>>
+<<if $consequences.choice_1>>
+    <<include 'escape-consequence_1'>>
+    <<else>>
+        <<include 'escape-consequence_1F'>>
+<</if>>
+<<if $consequences.choice_2>>
+    <<card_link "Continue" act1_e-escape_sc03a>>
+        <<set $effects.hand_adjustment += 1>>
+    <</card_link>>
+    <<else>>
+        <<card_link "Continue" act1_e-escape_sc03b>>
+            <<set $effects.hand_adjustment += 1>>
+        <</card_link>>
+<</if>>
+
+:: escape-consequence_0
+<p>Struggling, Kai crunches forward, gripping the system to pull himself up, gasping through his teeth. He pulls a wire from his engineering tablet and plugs it into a hidden socket along the edge of the device. The tablet's screen runs with diagnostics and statistics that are too dense to read now but he could comb through the data later, he hopes. He gasps as another load is forced out of him, splashing his goggles. </p>
+
+:: escape-consequence_0F
+<p>The EdgeWell continues to work his augmented cock, forcing load after load from him. Kai gasps as cum strikes him in the face, blinding him momentarily. Almost as soon as he wipes the thick liquid from his goggles another load is pumped onto his face. Its too difficult to concentrate on more than the main issue at hand. </p>
+
+:: escape-consequence_1
+<p>"BOSS! Override the pump protocols!" Kai shouts his command, forcing his voice over his own moaning.</P>
+
+<p>An arc of energy buzzes through the device, licking the encased member and causing Kai's abdomen to clench one last time. His breath catches in anticipation but the pumping has stopped with the last of the sparking light. </p>
+
+<<ai>>Foreign energy purged from the device, preliminary diagnostics concludes normal functioning.<</ai>>
+
+:: escape-consequence_1F
+<p>"BOSS! Override the pump protocols!" Kai shouts his command, forcing his voice over his own moaning.</P>
+<<ai>>Problem identified, Kai, the override won't work. There is an excess of energy in the system that is causing the pumps to malfunction. I cannot unbind the functions while the energy is inside the device.<</ai>>
+
+<<set $story.edgewell_damage += 1>>
+
+:: act1_e-escape_sc03a
+<<set $story.voreXP ++>>
+
+:: act1_e-escape_sc03b

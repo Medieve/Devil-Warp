@@ -1,6 +1,8 @@
 :: Start
 <p id="test" style="display: block; text-align: center; text-indent: 0; font-size: 24px;"><span class="infernal jitter"><<link 'Pain' 'start_pain'>><</link>></span></p>
 
+<<link 'Latest' 'act1_e-escape'>><</link>>
+
 <p><<link 'Test' 'test'>>
 <</link>></p>
 

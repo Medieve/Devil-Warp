@@ -30,7 +30,9 @@ jquery: on
                 b: "false",
                 c: "false",
                 d: "false"
-        }
+        },
+		edgewell_damage: 0,
+		voreXP: 0
 }>>
 <<set $cards = []>>
 <<include 'card_setup'>>

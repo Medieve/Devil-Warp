@@ -16,15 +16,11 @@
     float: right;
     margin-left: 2em;
     width: 50%;
-    gap: 2em 1em;
+    gap: 1em;
 }
 
 #ui-bar.stowed ~ #story .card_hand {
     left: calc(2em + 50%);
-}
-
-.drag_over {
-    background: red;
 }
 
 #card_hand {
@@ -75,6 +71,11 @@ card {
         background: linear-gradient(0deg, var(--dem-main-dark), transparent);
         border-color: var(--dem-main);
         filter: drop-shadow(2px 4px 10px var(--dem-main-dark));
+    }
+    &.boss {
+        background: linear-gradient(0deg, var(--boss-main-dark), transparent);
+        border-color: var(--boss-main);
+        filter: drop-shadow(2px 4px 10px var(--boss-main-dark));
     }
 
     h2 {
@@ -290,3 +291,115 @@ icon {
     border-color: green;
 }
 
+
+#menu_choices [id^="choice"] {
+    flex: 1;
+    position: relative;
+
+    display: grid;
+    grid-template-areas: 
+        "description description description description description description"
+        "current card1 card2 card3 value rewards";
+    grid-template-columns: auto auto auto auto auto 1fr;
+    place-content: center;
+    border: 2px solid white;
+    padding: 1em 2em;
+    
+    .choice_text {
+        grid-area: description;
+        text-align: center;
+    }
+    // Other elements in Choice
+    .requirements, .rewards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        text-align: center;
+
+    }
+    
+    .rewards {
+        grid-area: rewards;
+    }
+    h2 {
+        display: grid;
+        place-content: center;
+        margin: 0;
+        width: 50px;
+        aspect-ratio: 1;
+        border: 2px solid var(--ui-medium);
+        border-radius: 50%;
+        background: var(--ui-dark);
+        text-align: center;
+        // z-index: 1;
+
+        &.value {
+            grid-area: value;
+        }
+        &.current {
+            grid-area: current;
+            position: relative;
+            background: none;
+            border: none;
+            
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: var(--col-black);
+                border: 2px solid var(--ui-medium);
+                border-radius: 0;
+                rotate: 45deg;
+                z-index: -1;
+            }
+        }
+    }
+    p {
+        margin: 0;
+    }
+    &.success h2.current {
+        color: var(--ui-dark);
+        &::before {
+            background: var(--ui-accent);
+            border-color: var(--ui-accent-light);
+        }
+    }
+}
+
+#menu_choices [id^=choice_] {
+    &.vessel {
+        background: radial-gradient(ellipse at top center, transparent, var(--mc-main-dark));
+        color: var(--mc-main-light);
+        border: 2px solid var(--mc-main);
+        border-radius: 1em;
+        h2.value {
+            border-color: var(--mc-main);
+        }
+    }
+    &.boss {
+        background: radial-gradient(ellipse at top center, transparent, var(--boss-main-dark));
+        color: var(--boss-main-light);
+        border: 2px solid var(--boss-main);
+        border-radius: 1em;
+        h2.value {
+            border-color: var(--boss-main);
+        }
+    }
+    &.demon {
+        color: var(--dem-main-light);
+        border: unset;
+        &::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at top center, transparent, var(--dem-main-dark));
+            border: 2px solid var(--dem-main);
+            border-radius: 1em;
+            z-index: 0;
+            filter: url(#squiggle);
+        }
+        h2.value {
+            border-color: var(--dem-main);
+        }
+    }
+}

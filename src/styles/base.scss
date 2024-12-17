@@ -21,7 +21,7 @@
 
     --ui-dark: #1f1219;
     --ui-medium: hsl(310, 36%, 32%);
-    --ui-light: #9e8792;
+    --ui-light: #b99dab;
     --ui-accent: #ffcc00;
     --ui-accent-dark: #411817;
     --ui-accent-light: #ffcc66;
@@ -38,13 +38,17 @@
         linear-gradient(black 0%, black 100%);
         box-shadow: 0 0 20px var(--col-deep), 0 0 12px var(--ui-medium), 0 0 2px var(--ui-medium);
 
-    --mc-main: hsl(230, 40%, 44%);
-    --mc-main-dark: hsla(230, 70%, 20%, 0.6);
+    --mc-main: hsl(230, 50%, 44%);
+    --mc-main-dark: hsla(230, 84%, 20%, 0.6);
     --mc-main-light: hsl(230, 100%, 80%);
 
-    --dem-main: hsl(330, 70%, 44%);;
+    --dem-main: hsl(330, 50%, 44%);;
     --dem-main-dark: hsla(300, 84%, 14%, 0.6);
     --dem-main-light: hsl(0, 100%, 80%);
+
+    --boss-main: hsl(162, 50%, 44%);
+    --boss-main-dark: hsla(162, 84%, 14%, 0.6);
+    --boss-main-light: hsl(162, 100%, 80%);
 
     --math-bounce: cubic-bezier(.3,-1,.6,2);
     --math-overshoot: cubic-bezier(.4,0,.3,1.5);
@@ -177,13 +181,13 @@ div#master {
     grid-row: 2;
     
     width: calc(140ch + var(--__padding) * 2);
-    margin-top: 15vh;
+    margin-top: 10vh;
     margin-left: 12vw;
     height: max-content;
     bottom: 0;
     
     padding: var(--__padding);
-    padding-bottom: 20vh;
+    padding-bottom: 24vh;
     
     &::before, &::after {
         content: '';
@@ -214,7 +218,7 @@ div#master {
         z-index: -4;
     }
     &:not(:has(#menu_choices)) {
-        padding: 2em 5vw;
+        padding: 2em 5vw 24vh 5vw;
         width: calc(70ch + var(--__padding) * 2);
     }
 }
